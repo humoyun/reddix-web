@@ -1,0 +1,4 @@
+fragment RegularMember on Member {
+  id
+  username
+}
