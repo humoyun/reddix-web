@@ -1,6 +1,6 @@
-import { dedupExchange, fetchExchange } from "urql";
-import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from "../generated/graphql";
-import { cacheExchange } from "@urql/exchange-graphcache";
+import { dedupExchange, fetchExchange } from 'urql'
+import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from '../generated/graphql'
+import { cacheExchange } from '@urql/exchange-graphcache'
 
 function betterUpdateQuery<Result, Query>(
   cache: Cache,
@@ -8,14 +8,20 @@ function betterUpdateQuery<Result, Query>(
   result: any,
   fn: (r: Result, q: Query) => Query
 ) {
-  return cache.updateQuery(qi, (data) => fn(result, data as any) as any);
+  return cache.updateQuery(qi, (data) => fn(result, data as any) as any)
 }
 
 
 export const createUrqlClient = (ssrExchange: any) => ({
-  url: "http://localhost:4400/graphql",
+  // requestPolicy: "cache-first" | "cache-only" | "network-only" | "cache-and-network",
+  url: 'http://localhost:4400/graphql',
   fetchOptions: {
-    credentials: "include" as const,
+    credentials: 'include' as const,
+    // headers: {
+    //   Authorization: ctx
+    //     ? `Bearer ${ctx?.req?.headers?.Authorization ?? ""}`
+    //     : localStorage.getItem("token") ?? "",
+    // }
   },
   exchanges: [
     dedupExchange,
@@ -29,7 +35,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
               { query: MeDocument },
               _result,
               () => ({ me: null })
-            );
+            )
           },
 
           login: (_result, args, cache, info) => {
@@ -39,14 +45,14 @@ export const createUrqlClient = (ssrExchange: any) => ({
               _result,
               (res, query) => {
                 if (res.login.errors) {
-                  return query;
+                  return query
                 } else {
                   return {
                     me: res.login.user,
-                  };
+                  }
                 }
               }
-            );
+            )
           },
         },
       },
@@ -54,4 +60,4 @@ export const createUrqlClient = (ssrExchange: any) => ({
     ssrExchange,
     fetchExchange,
   ],
-}); 
+}) 

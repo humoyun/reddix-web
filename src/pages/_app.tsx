@@ -10,7 +10,7 @@ const MyApp = ({ Component, pageProps }: any) => {
           <Component {...pageProps} />
         {/* </ColorModeProvider> */}
       </ThemeProvider>
-  );
+  )
 }
 
 export default MyApp

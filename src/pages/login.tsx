@@ -1,5 +1,5 @@
-import React from "react";
-import { Formik, Form } from "formik";
+import React from 'react'
+import { Formik, Form } from 'formik'
 import {
   FormControl,
   FormLabel,
@@ -7,26 +7,26 @@ import {
   FormErrorMessage,
   Box,
   Button,
-} from "@chakra-ui/core";
-import { Wrapper } from "../components/Wrapper";
-import { InputField } from "../components/InputField";
+} from '@chakra-ui/core'
+import { BodyWrapper } from "../components/BodyWrapper";
+import { InputField } from '../components/InputField'
 import { useMutation } from 'urql'
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router'
 import { useLoginMutation } from '../generated/graphql'
-import { toErrorMap } from "../utils/errorMapper";
-import { withUrqlClient } from "next-urql";
-import { createUrqlClient } from "../utils/createUrqlCLient";
+import { toErrorMap } from '../utils/errorMapper'
+import { withUrqlClient } from 'next-urql'
+import { createUrqlClient } from '../utils/createUrqlCLient'
 
 interface loginProps {}
 
 const Login: React.FC<loginProps> = ({}) => {
-  const [, login] = useLoginMutation();
-  const router = useRouter();
+  const [, login] = useLoginMutation()
+  const router = useRouter()
   
   return (
-    <Wrapper variant="small">
+    <BodyWrapper variant="small">
       <Formik
-        initialValues={{ username: "", password: "" }}
+        initialValues={{ usernameOrEmail: "", password: "" }}
         onSubmit={async (values, { setErrors }) => {
           console.log("values ", values);
           const resp = await login(values);
@@ -40,9 +40,9 @@ const Login: React.FC<loginProps> = ({}) => {
         {({ isSubmitting }) => (
           <Form>
             <InputField
-              name="username"
-              placeholder="username"
-              label="Username"
+              name="usernameOrEmail"
+              placeholder="username or email"
+              label="Username Or Email"
             />
             <Box mt={4}>
               <InputField
@@ -63,8 +63,8 @@ const Login: React.FC<loginProps> = ({}) => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </BodyWrapper>
   );
-};
+}
 
-export default withUrqlClient(createUrqlClient)(Login);
+export default withUrqlClient(createUrqlClient)(Login)
