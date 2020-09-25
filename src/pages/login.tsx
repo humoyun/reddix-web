@@ -8,7 +8,7 @@ import {
   Box,
   Button,
 } from '@chakra-ui/core'
-import { BodyWrapper } from "../components/BodyWrapper";
+import { BodyWrapper } from '../components/BodyWrapper'
 import { InputField } from '../components/InputField'
 import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
@@ -17,7 +17,7 @@ import { toErrorMap } from '../utils/errorMapper'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 
-interface loginProps {}
+// interface loginProps {}
 
 const Login: React.FC<loginProps> = ({}) => {
   const [, login] = useLoginMutation()
@@ -26,14 +26,14 @@ const Login: React.FC<loginProps> = ({}) => {
   return (
     <BodyWrapper variant="small">
       <Formik
-        initialValues={{ usernameOrEmail: "", password: "" }}
+        initialValues={{ usernameOrEmail: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
-          console.log("values ", values);
-          const resp = await login(values);
+          console.log('values ', values)
+          const resp = await login(values)
           if (resp.data?.login.errors) {
-            setErrors(toErrorMap(resp.data?.login.errors));
+            setErrors(toErrorMap(resp.data?.login.errors))
           } else if (resp.data?.login.member) {
-            router.push("/");
+            router.push('/')
           }
         }}
       >
@@ -64,7 +64,7 @@ const Login: React.FC<loginProps> = ({}) => {
         )}
       </Formik>
     </BodyWrapper>
-  );
+  )
 }
 
 export default withUrqlClient(createUrqlClient)(Login)

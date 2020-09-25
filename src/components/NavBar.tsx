@@ -5,6 +5,7 @@ import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 
 
 export interface NavBarProps {
+  dummy?: string
 } 
 
 export const NavBar: React.FC<NavBarProps> = ({ }) => {
@@ -34,7 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
           </Button>
         </NextLink>
       </>
-    );
+    )
   } else { 
     body = (
       <Flex alignItems="center">
@@ -61,7 +62,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
       position="sticky"
       top={0}
     >
-      <Box ml={"auto"}>{body}</Box>
+      <Box ml={'auto'}>{body}</Box>
     </Flex>
-  );
+  )
 }

@@ -12,13 +12,13 @@ const MediaUpload = (props: MediaUploadProps) => {
   return (
     <Box>
       <input
-        style={{ display: "none" }}
+        style={{ display: 'none' }}
         type="file"
         encType="multipart/form-data"
         {...props}
       />
     </Box>
-  );
+  )
 }
 
-export default MediaUpload;
+export default MediaUpload

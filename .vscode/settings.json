@@ -1,0 +1,14 @@
+{
+  "eslint.options": {
+    "configFile": ".eslintrc"
+  },
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "markdown"
+  ],
+  "vetur.validation.template": false
+}

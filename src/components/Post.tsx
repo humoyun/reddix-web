@@ -1,19 +1,30 @@
-import React from 'react'
-import { Flex, Box, Heading, PseudoBox } from "@chakra-ui/core";
-import Downvote from "../icons/down-arrow.svg";
-import Upvote from "../icons/up-arrow.svg";
+import React, { useState } from 'react'
+import { Flex, Box, Heading } from '@chakra-ui/core'
+import Downvote from '../icons/down-arrow.svg'
+import Upvote from '../icons/up-arrow.svg'
 
-interface PostProps { 
-  data: Object
+interface PostProps {
+  data: PostData;
 }
 
-const Post = ({ data }) => {
-  const handlePostClick = () => { 
-    console.log("handlePostClick");
+export interface PostData {
+  id: string;
+  title: string;
+  content: string;
+  vote: number;
+}
+
+export const Post = ({ data }: PostProps) => {
+  const [vote, setVote] = useState(data.vote)
+  const handlePostClick = () => {
+    console.log('handlePostClick')
   }
-  const handleVote = (e: React.SyntheticEvent, vote: string) => { 
+  
+  const handleVote = (e: React.SyntheticEvent, vote: string) => {
     e.stopPropagation()
-    console.log("vote for post ", vote);
+    if (vote === 'up') setVote((v) => v + 1)
+    else setVote((v) => v - 1)
+    console.log('vote for post ', vote)
   }
 
   return (
@@ -25,7 +36,7 @@ const Post = ({ data }) => {
       borderRadius={3}
       borderColor="lightgrey"
       _hover={{
-        borderColor: "black",
+        borderColor: 'black',
       }}
       cursor="pointer"
       onClick={() => handlePostClick()}
@@ -38,19 +49,21 @@ const Post = ({ data }) => {
         borderTopLeftRadius={2}
         borderBottomLeftRadius={2}
       >
-        <Upvote
-          onClick={(e) => handleVote(e, "up")}
-          style={{ fill: "red" }}
-          width={18}
-          height={18}
-        ></Upvote>
-        <Box>123</Box>
-        <Downvote
-          onClick={(e) => handleVote(e, "down")}
-          style={{ fill: "#455A64" }}
-          width={18}
-          height={18}
-        ></Downvote>
+        <Flex alignItems="center" flexDirection="column" >
+          <Upvote
+            onClick={(e) => handleVote(e, 'up')}
+            style={{ fill: 'red' }}
+            width={15}
+            height={15}
+          ></Upvote>
+          <Box userSelect="none">{vote}</Box>
+          <Downvote
+            onClick={(e) => handleVote(e, 'down')}
+            style={{ fill: '#455A64' }}
+            width={15}
+            height={15}
+          ></Downvote>
+        </Flex>
       </Box>
 
       <Flex
@@ -67,7 +80,5 @@ const Post = ({ data }) => {
         <Box fontSize={14}>{data.content}</Box>
       </Flex>
     </Flex>
-  );
-};
-
-export default Post;
+  )
+}

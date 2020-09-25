@@ -1,26 +1,21 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
   Box,
   Button,
 } from '@chakra-ui/core'
 import { Wrapper } from '../components/BodyWrapper'
 import { InputField } from '../components/InputField'
-import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
 import { useRegisterMutation } from '../generated/graphql'
 import { toErrorMap } from '../utils/errorMapper'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 
-interface registerProps {}
+// interface registerProps {}
 
 const Register: React.FC<registerProps> = ({ }) => {
-  const router = useRouter();
+  const router = useRouter()
   const [, register] = useRegisterMutation()
 
   return (
