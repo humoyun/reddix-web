@@ -1,0 +1,8 @@
+fragment RegularMemberResponse on UserResponse {
+  errors{
+    ...RegularError
+  }
+  member {
+    ...RegularMember
+  }
+}
