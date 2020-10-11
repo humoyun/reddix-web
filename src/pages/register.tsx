@@ -4,7 +4,7 @@ import {
   Box,
   Button,
 } from '@chakra-ui/core'
-import { Wrapper } from '../components/BodyWrapper'
+import { BodyWrapper } from '../components/BodyWrapper'
 import { InputField } from '../components/InputField'
 import { useRouter } from 'next/router'
 import { useRegisterMutation } from '../generated/graphql'
@@ -12,39 +12,37 @@ import { toErrorMap } from '../utils/errorMapper'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 
-// interface registerProps {}
+interface registerProps {
+  dummy?: string
+}
 
 const Register: React.FC<registerProps> = ({ }) => {
   const router = useRouter()
   const [, register] = useRegisterMutation()
 
   return (
-    <Wrapper variant="small">
+    <BodyWrapper variant="small">
       <Formik
         initialValues={{ username: '', email: '', password: '' }}
-        onSubmit={async (values, { setErrors }) => {     
-          console.log('values ', values) 
+        onSubmit={async (values, { setErrors }) => {
+          console.log('values ', values)
           const resp = await register({ options: values })
           if (resp.data?.register.errors) {
             setErrors(toErrorMap(resp.data?.register.errors))
-          } else if (resp.data?.register.member) { 
+          } else if (resp.data?.register.member) {
             router.push('/')
           }
         }}
       >
         {({ isSubmitting }) => (
           <Form>
-            <InputField   
+            <InputField
               name="username"
               placeholder="username"
               label="Username"
             />
             <Box mt={4}>
-              <InputField
-                name="email"
-                placeholder="email"
-                label="Email"
-              />
+              <InputField name="email" placeholder="email" label="Email" />
             </Box>
             <Box mt={4}>
               <InputField
@@ -58,14 +56,14 @@ const Register: React.FC<registerProps> = ({ }) => {
               mt={4}
               type="submit"
               isLoading={isSubmitting}
-              variantColor="teal"
+              variantcolor="teal"
             >
               register
             </Button>
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </BodyWrapper>
   )
 }
 

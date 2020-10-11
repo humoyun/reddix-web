@@ -2,12 +2,12 @@ import { withUrqlClient } from 'next-urql'
 import { Box, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 import { usePostsQuery } from '../generated/graphql'
-import Layout from '../components/Layout'
 import { Post } from '../components/Post'
-import { CreatePost } from '../components/CreatePost'
+import { PostInput } from '../components/PostInput'
 
 const Index = () => { 
   const [{ data }] = usePostsQuery()
+  console.log('usePostsQuery ', data)
 
   const posts = [
     {
@@ -68,12 +68,12 @@ const Index = () => {
   ]
 
   return (
-    <Layout>
+    <Box>
       <Heading as="h3" size="lg">
         3i Insite Blog
       </Heading>
 
-      <CreatePost></CreatePost>
+      <PostInput></PostInput>
 
       {posts.map((post) => (
         <Post key={post.id} data={post}></Post>
@@ -82,7 +82,7 @@ const Index = () => {
       {/* {!data ? ( <div>Loading...</div> ) : (data.posts.map(p =>
         <div key={p.id}>{p.title}</div>
       ))} */}
-    </Layout>
+    </Box>
   )
 }
 

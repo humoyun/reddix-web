@@ -297,7 +297,7 @@ export const CreatePostDocument = gql`
     `
 
 export function useCreatePostMutation() {
-  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocumen)
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument)
 }
 
 export const ForgotPasswordDocument = gql`

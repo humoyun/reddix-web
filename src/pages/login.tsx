@@ -1,16 +1,12 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
 import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
   Box,
   Button,
 } from '@chakra-ui/core'
 import { BodyWrapper } from '../components/BodyWrapper'
 import { InputField } from '../components/InputField'
-import { useMutation } from 'urql'
+// import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
 import { useLoginMutation } from '../generated/graphql'
 import { toErrorMap } from '../utils/errorMapper'
@@ -33,7 +29,11 @@ const Login: React.FC<loginProps> = ({}) => {
           if (resp.data?.login.errors) {
             setErrors(toErrorMap(resp.data?.login.errors))
           } else if (resp.data?.login.member) {
-            router.push('/')
+            if (typeof router.query.next === 'string') {
+              router.push(router.query.next)
+            } else {
+              router.push('/')
+            }
           }
         }}
       >
