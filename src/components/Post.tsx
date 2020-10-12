@@ -10,12 +10,13 @@ interface PostProps {
 export interface PostData {
   id: string;
   title: string;
-  content: string;
-  vote: number;
+  text: string;
+  points: number;
 }
 
 export const Post = ({ data }: PostProps) => {
-  const [vote, setVote] = useState(data.vote)
+  const [vote, setVote] = useState(data.points)
+  
   const handlePostClick = () => {
     console.log('handlePostClick')
   }
@@ -77,7 +78,7 @@ export const Post = ({ data }: PostProps) => {
         <Heading as="h4" size="sm">
           {data.title}
         </Heading>
-        <Box fontSize={14}>{data.content}</Box>
+        <Box fontSize={14}>{data.text}</Box>
       </Flex>
     </Flex>
   )

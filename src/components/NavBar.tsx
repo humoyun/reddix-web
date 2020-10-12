@@ -4,6 +4,7 @@ import NextLink from 'next/link'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import SearchIcon from '../icons/search.svg'
 import ReddirLogo from '../icons/reddit-social-logo.svg'
+import { useRouter } from 'next/router'
 
 export interface NavBarProps {
   dummy?: string
@@ -13,9 +14,14 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
   const [{ data, fetching }] = useMeQuery({
     pause: typeof window === 'undefined' || typeof window === undefined
   })
+  const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
   let body = null
   console.log('data me : ', data)
+
+  const goHome = () => {
+    router.push('/')
+  }
 
   if (!data?.me) {
     body = (
@@ -62,12 +68,12 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
       top={0}
     >
       <Flex alignItems="center" flex={1}>
-        {/* <Box ml={4}>
-          <ReddirLogo width={38} height={38} style={{ fill: 'black' }} />
+        <Box ml={4}>
+          <ReddirLogo  onClick={goHome} width={38} height={38} style={{ fill: 'black', cursor: 'pointer' }} />
         </Box>
         <Heading ml={2} as="h3" size="md">
           Reddir
-        </Heading> */}
+        </Heading>
       </Flex>
 
       {data?.me && (

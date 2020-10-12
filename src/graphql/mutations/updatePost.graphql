@@ -1,11 +1,10 @@
-mutation UpdatePost($id: number, $title: String!, $text: String!) {
-  updatePost($id: $id, title: $title, text: $text) {
+mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
+  updatePost(id: $id, title: $title, text: $text) {
     id
     title
     text
     points
     creatorId
     createdAt
-    updatedAt
   }
 }

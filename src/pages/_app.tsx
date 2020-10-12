@@ -1,7 +1,7 @@
 import { ThemeProvider, CSSReset, ColorModeProvider } from '@chakra-ui/core'
 
 import theme from '../theme'
-import Layout from '../components/Layout'
+import Layout from '../layouts/Layout'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 
