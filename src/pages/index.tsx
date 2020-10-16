@@ -1,5 +1,5 @@
 import { withUrqlClient } from 'next-urql'
-import { Box, Heading } from '@chakra-ui/core'
+import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 import { usePostsQuery } from '../generated/graphql'
 import { Post } from '../components/Post'
@@ -8,7 +8,7 @@ import { PostInput } from '../components/PostInput'
 const Index = () => { 
   const [{ data, loading }] = usePostsQuery({
     variables: {
-      limit: 50,
+      limit: 10,
     },
   })
   console.log('usePostsQuery ')
@@ -20,18 +20,28 @@ const Index = () => {
       </Heading>
 
       <PostInput></PostInput>
-
-      {loading ?
+      
+      <Box>
+      {!data ?
         <Box>Loading...</Box> :
-        data && data.posts.map((post) => (
-          <Post key={post.id} data={post}></Post>
-        ))
-      } 
+        (
+          data.posts.map((post) => (
+            <Post key={post.id} data={post} />
+          ))
+        )
+        }
+      </Box>
 
+      <Flex className='load-more-btn'>
+        {/* This div className is also the same as Flex className inside loop */}
+        <Button
+          variant="outline"
+          m="auto"
+          isLoading={loading}>
+          Load more
+        </Button>
+      </Flex>
 
-      {/* {!data ? ( <div>Loading...</div> ) : (data.posts.map(p =>
-        <div key={p.id}>{p.title}</div>
-      ))} */}
     </Box>
   )
 }

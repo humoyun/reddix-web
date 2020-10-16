@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Flex, Box, Heading } from '@chakra-ui/core'
 import Downvote from '../icons/down-arrow.svg'
 import Upvote from '../icons/up-arrow.svg'
+import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 
 interface PostProps {
   data: PostData;
@@ -10,15 +12,39 @@ interface PostProps {
 export interface PostData {
   id: string;
   title: string;
-  text: string;
+  textSnippet: string;
   points: number;
 }
 
+const Flexbox = styled.div`
+  display: flex;
+  flex-direction: row;
+  min-height: 100px;
+  margin: 10px 0;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: black;
+  }
+`
+
+const Rightbox = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+`
+
 export const Post = ({ data }: PostProps) => {
   const [vote, setVote] = useState(data.points)
-  
+  const router = useRouter()
+
   const handlePostClick = () => {
     console.log('handlePostClick')
+    router.push(`/post/${data.id}`)
   }
   
   const handleVote = (e: React.SyntheticEvent, vote: string) => {
@@ -29,19 +55,7 @@ export const Post = ({ data }: PostProps) => {
   }
 
   return (
-    <Flex
-      flexDirection="row"
-      minH={100}
-      my={5}
-      border="1px"
-      borderRadius={3}
-      borderColor="lightgrey"
-      _hover={{
-        borderColor: 'black',
-      }}
-      cursor="pointer"
-      onClick={() => handlePostClick()}
-    >
+    <Flexbox onClick={() => handlePostClick()}>
       <Box
         w={10}
         p={1}
@@ -50,7 +64,7 @@ export const Post = ({ data }: PostProps) => {
         borderTopLeftRadius={2}
         borderBottomLeftRadius={2}
       >
-        <Flex alignItems="center" flexDirection="column" >
+        <Rightbox>
           <Upvote
             onClick={(e) => handleVote(e, 'up')}
             style={{ fill: 'red' }}
@@ -64,7 +78,7 @@ export const Post = ({ data }: PostProps) => {
             width={15}
             height={15}
           ></Downvote>
-        </Flex>
+        </Rightbox>
       </Box>
 
       <Flex
@@ -78,8 +92,8 @@ export const Post = ({ data }: PostProps) => {
         <Heading as="h4" size="sm">
           {data.title}
         </Heading>
-        <Box fontSize={14}>{data.text}</Box>
+        <Box fontSize={14}>{data.textSnippet}</Box>
       </Flex>
-    </Flex>
+    </Flexbox>
   )
 }
