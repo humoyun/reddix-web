@@ -1,5 +1,8 @@
 import { theme as chakraTheme } from '@chakra-ui/core'
 
+// good example of styles
+// https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss
+
 const fonts = { ...chakraTheme.fonts, mono: '\'Menlo\', monospace' }
 
 const breakpoints = ['40em', '52em', '64em']

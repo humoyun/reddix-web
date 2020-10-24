@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
-import * as Urql from 'urql'
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -15,7 +15,7 @@ export type Scalars = {
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<Member>;
-  posts: Array<Post>;
+  posts: PaginatedPosts;
   post?: Maybe<Post>;
 };
 
@@ -39,6 +39,12 @@ export type Member = {
   updatedAt: Scalars['String'];
 };
 
+export type PaginatedPosts = {
+  __typename?: 'PaginatedPosts';
+  posts: Array<Post>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type Post = {
   __typename?: 'Post';
   id: Scalars['Float'];
@@ -46,6 +52,7 @@ export type Post = {
   text: Scalars['String'];
   points: Scalars['Float'];
   creatorId: Scalars['Float'];
+  creator: Member;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   textSnippet: Scalars['String'];
@@ -277,10 +284,18 @@ export type PostsQueryVariables = Exact<{
 
 export type PostsQuery = (
   { __typename?: 'Query' }
-  & { posts: Array<(
-    { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'textSnippet' | 'points' | 'creatorId' | 'createdAt'>
-  )> }
+  & { posts: (
+    { __typename?: 'PaginatedPosts' }
+    & Pick<PaginatedPosts, 'hasMore'>
+    & { posts: Array<(
+      { __typename?: 'Post' }
+      & Pick<Post, 'id' | 'title' | 'textSnippet' | 'points' | 'createdAt'>
+      & { creator: (
+        { __typename?: 'Member' }
+        & Pick<Member, 'id' | 'username'>
+      ) }
+    )> }
+  ) }
 );
 
 export const RegularErrorFragmentDoc = gql`
@@ -288,13 +303,13 @@ export const RegularErrorFragmentDoc = gql`
   field
   message
 }
-    `
+    `;
 export const RegularMemberFragmentDoc = gql`
     fragment RegularMember on Member {
   id
   username
 }
-    `
+    `;
 export const RegularMemberResponseFragmentDoc = gql`
     fragment RegularMemberResponse on UserResponse {
   errors {
@@ -305,18 +320,18 @@ export const RegularMemberResponseFragmentDoc = gql`
   }
 }
     ${RegularErrorFragmentDoc}
-${RegularMemberFragmentDoc}`
+${RegularMemberFragmentDoc}`;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
     ...RegularMemberResponse
   }
 }
-    ${RegularMemberResponseFragmentDoc}`
+    ${RegularMemberResponseFragmentDoc}`;
 
 export function useChangePasswordMutation() {
-  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument)
-}
+  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
@@ -329,21 +344,20 @@ export const CreatePostDocument = gql`
     updatedAt
   }
 }
-    `
+    `;
 
 export function useCreatePostMutation() {
-  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument)
-}
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
+};
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
-    `
+    `;
 
 export function useForgotPasswordMutation() {
-  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument)
-}
-
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
+};
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -356,20 +370,20 @@ export const LoginDocument = gql`
     }
   }
 }
-    ${RegularMemberFragmentDoc}`
+    ${RegularMemberFragmentDoc}`;
 
 export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
-}
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
 export const LogoutDocument = gql`
-  mutation Logout {
-    logout
-  }
-`
+    mutation Logout {
+  logout
+}
+    `;
 
 export function useLogoutMutation() {
-  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument)
-}
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
+};
 export const RegisterDocument = gql`
     mutation Register($options: UserInput!) {
   register(args: $options) {
@@ -382,69 +396,74 @@ export const RegisterDocument = gql`
     }
   }
 }
-    ${RegularMemberFragmentDoc}`
+    ${RegularMemberFragmentDoc}`;
 
 export function useRegisterMutation() {
-  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument)
-}
-
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
 export const UpdatePostDocument = gql`
-  mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
-    updatePost(id: $id, title: $title, text: $text) {
+    mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
+  updatePost(id: $id, title: $title, text: $text) {
     id
     title
     text
     points
     creatorId
     createdAt
-    }
   }
-`
+}
+    `;
 
 export function useUpdatePostMutation() {
-  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument)
-}
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
+};
 export const MeDocument = gql`
     query Me {
   me {
     ...RegularMember
   }
 }
-    ${RegularMemberFragmentDoc}`
+    ${RegularMemberFragmentDoc}`;
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options })
-}
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
 export const PostDocument = gql`
-  query Post($id: Int!) {
-    post(id: $id) {
-      id
-      title
-      text
-      points
-      creatorId
-      createdAt
-      updatedAt
-    }
+    query Post($id: Int!) {
+  post(id: $id) {
+    id
+    title
+    text
+    points
+    creatorId
+    createdAt
+    updatedAt
   }
-`
+}
+    `;
 
 export function usePostQuery(options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<PostQuery>({ query: PostDocument, ...options })
-}
+  return Urql.useQuery<PostQuery>({ query: PostDocument, ...options });
+};
 export const PostsDocument = gql`
-  query Posts($limit: Int!, $cursor: String) {
-    posts(limit: $limit, cursor: $cursor) {
+    query Posts($limit: Int!, $cursor: String) {
+  posts(limit: $limit, cursor: $cursor) {
+    hasMore
+    posts {
       id
       title
       textSnippet
       points
-      creatorId
       createdAt
+      creator {
+        id
+        username
+      }
     }
   }
-`
+}
+    `;
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options })
-}
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
+};

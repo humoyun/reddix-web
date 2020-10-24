@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { withUrqlClient } from 'next-urql'
 import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '../utils/createUrqlCLient'
@@ -5,30 +6,37 @@ import { usePostsQuery } from '../generated/graphql'
 import { Post } from '../components/Post'
 import { PostInput } from '../components/PostInput'
 
-const Index = () => { 
-  const [{ data, loading }] = usePostsQuery({
-    variables: {
-      limit: 10,
-    },
-  })
-  console.log('usePostsQuery ')
+type NS = string | null
 
+const Index = () => { 
+  const [variables, setVariables] = useState({limit: 5, cursor: null})
+  const [{ data, fetching }] = usePostsQuery({ variables })
+
+  console.log('usePostsQuery ', data)
+  const loadMore = () => {
+    console.log('*** loadMore ***')
+    const len =  data.posts.posts.length - 1
+    const cursor: NS = data.posts.posts[len].createdAt
+    setVariables({ limit: variables.limit, cursor })
+  }
+  
   return (
     <Box>
-      <Heading as="h3" size="lg">
-        3i Insite Blog
-      </Heading>
-
       <PostInput></PostInput>
       
       <Box>
       {!data ?
-        <Box>Loading...</Box> :
-        (
-          data.posts.map((post) => (
-            <Post key={post.id} data={post} />
-          ))
-        )
+          <Flex w="100%" h={200} justify="center" align="center">
+            <Heading size="md">Loading...</Heading>
+          </Flex> :
+          (<Box>
+            {
+              data.posts.posts.map((post) => (
+                <Post key={post.id} data={post} />
+              ))
+            }
+          </Box>
+          )
         }
       </Box>
 
@@ -37,7 +45,9 @@ const Index = () => {
         <Button
           variant="outline"
           m="auto"
-          isLoading={loading}>
+          onClick={() => loadMore()}
+          isLoading={fetching}>
+          
           Load more
         </Button>
       </Flex>

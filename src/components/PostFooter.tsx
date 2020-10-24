@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Flex, Box, Heading } from '@chakra-ui/core'
-import Downvote from '../icons/arrow-down.svg'
-import Upvote from '../icons/arrow-up.svg'
 
 import GiveAward from '../icons/give-award.svg'
 import PostSave from '../icons/post-save.svg'
@@ -23,16 +21,6 @@ export interface PostData {
   points: number;
 }
 
-const FlexCore = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-
-const PostFooter = styled(FlexCore)`
-  height: 100%;
-  align-items: center;
-`
-
 const PostButton = styled.div`  
   display: inline-flex;
   padding: 2px 4px;
@@ -52,40 +40,42 @@ const PostButton = styled.div`
   }
 `
 
-export const PostFooter = ({ data }: PostProps) => {
-  const [vote, setVote] = useState(data.points)
-  const router = useRouter()
+const PostFooter = ({ data }: PostProps) => {
+  const [isSaved, setIsSaved] = useState(Math.round(Math.random()))
 
   const command = (e: React.SyntheticEvent, cmd: string) => {
     console.log('command', cmd)
+    
+    if (cmd === 'bookmark') {
+      setIsSaved((old) => (old + 1)%2)
+    } else if (cmd === 'share') { 
+      console.log()
+    }
   }
 
   return (
-    <PostFooter className="post-footer">
-      <PostButton>
+    <Flex direction="row" align="center" h="100%" mt={2}>
+      <PostButton onClick={(e) => command(e, 'give-award')}>
         <GiveAward
-          onClick={(e) => command(e, 'share')}
           style={{ fill: '#455A64' }}
           width={16}
           height={16}
         />
         <span>123</span>
-        <span>Comments</span>
+        <span>Give Award</span>
       </PostButton>
 
-      <PostButton>
+      <PostButton onClick={(e) => command(e, 'comments')}>
         <Comments
-          onClick={(e) => command(e, 'share')}
           style={{ fill: '#455A64' }}
           width={16}
           height={16}
           />
-        <span>Give Award</span>
+        <span>Comments</span>
       </PostButton>
 
-      <PostButton>
+      <PostButton onClick={(e) => command(e, 'share')}>
         <Share
-          onClick={(e) => command(e, 'share')}
           style={{ fill: '#455A64' }}
           width={16}
           height={16}
@@ -93,16 +83,22 @@ export const PostFooter = ({ data }: PostProps) => {
         <span>Share</span>
       </PostButton>
 
-      <PostButton>
-        <PostSave
-          onClick={(e) => command(e, 'share')}
-          style={{ fill: '#455A64' }}
-          width={16}
-          height={16}
-        />
-        <span>Save</span>
+      <PostButton onClick={(e) => command(e, 'bookmark')}>
+        {isSaved ?
+          <PostUnsave
+            style={{ fill: '#455A64' }}
+            width={16}
+            height={16} /> :
+          <PostSave
+            style={{ fill: '#455A64' }}
+            width={16}
+            height={16} />
+        }
+        {isSaved ? <span>Unsave</span>: <span>Save</span>}
       </PostButton>
 
-    </PostFooter>
+    </Flex>
   )
 }
+
+export default PostFooter

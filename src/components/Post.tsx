@@ -1,16 +1,10 @@
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { Flex, Box, Heading } from '@chakra-ui/core'
 import Downvote from '../icons/arrow-down.svg'
 import Upvote from '../icons/arrow-up.svg'
-
-import GiveAward from '../icons/give-award.svg'
-import PostSave from '../icons/post-save.svg'
-import PostUnsave from '../icons/post-unsave.svg'
-import Share from '../icons/arrow-share.svg'
-import Comments from '../icons/comments.svg'
-
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+import PostFooter from './PostFooter'
 
 interface PostProps {
   data: PostData;
@@ -32,13 +26,16 @@ const Flexbox = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 100px;
-  margin: 10px 0;
-  border: 1px solid lightgrey;
+  margin: 15px 0;
+  border: 1px solid #fff;
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.1);
   border-radius: 3px;
   cursor: pointer;
+  transition: box-shadow 0.1s ease-in;
 
   &:hover {
-    border-color: black;
+    // border-color: black;
+    border: 1px solid lightgrey;
   }
 `
 
@@ -54,29 +51,7 @@ const PostHeader = styled(FlexCore)`
 `
 const PostContent = styled(FlexCore)`
   height: 100%;
-`
-const PostFooter = styled(FlexCore)`
-  height: 100%;
-  align-items: center;
-`
-
-const PostButton = styled.div`  
-  display: inline-flex;
-  padding: 2px 4px;
-  flex-direction: row;
-  font-size: 10px;
-  border-radius: 3px;
-  transition: background-color 0.2s ease-in;
-  margin-left: 2px;
-
-  span {
-    display: inline-block;
-    margin-left: 2px;
-  }
-
-  &:hover {
-    background-color: #e1e2e4;
-  }
+  flex-direction: column;
 `
 
 export const Post = ({ data }: PostProps) => {
@@ -88,9 +63,7 @@ export const Post = ({ data }: PostProps) => {
     router.push(`/post/${data.id}`)
   }
 
-  const command = (e: React.SyntheticEvent, cmd: string) => {
-    console.log('command', cmd)
-  }
+
   
   const handleVote = (e: React.SyntheticEvent, vote: string) => {
     e.stopPropagation()
@@ -146,46 +119,6 @@ export const Post = ({ data }: PostProps) => {
         </PostContent>
 
         <PostFooter className="post-footer">
-          <PostButton>
-            <GiveAward
-              onClick={(e) => command(e, 'share')}
-              style={{ fill: '#455A64' }}
-              width={16}
-              height={16}
-            />
-            <span>123</span>
-            <span>Comments</span>
-          </PostButton>
-
-          <PostButton>
-            <Comments
-              onClick={(e) => command(e, 'share')}
-              style={{ fill: '#455A64' }}
-              width={16}
-              height={16}
-              />
-            <span>Give Award</span>
-          </PostButton>
-
-          <PostButton>
-            <Share
-              onClick={(e) => command(e, 'share')}
-              style={{ fill: '#455A64' }}
-              width={16}
-              height={16}
-              />  
-            <span>Share</span>
-          </PostButton>
-
-          <PostButton>
-            <PostSave
-              onClick={(e) => command(e, 'share')}
-              style={{ fill: '#455A64' }}
-              width={16}
-              height={16}
-            />
-            <span>Save</span>
-          </PostButton>
 
         </PostFooter>
       </Flex>

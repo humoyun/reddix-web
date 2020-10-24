@@ -2,6 +2,7 @@ import { dedupExchange, Exchange, fetchExchange } from 'urql'
 import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from '../generated/graphql'
 import { cacheExchange } from '@urql/exchange-graphcache'
 import { pipe, tap } from 'wonka'
+import { cursorPagination } from './cursorPagination'
 
 function betterUpdateQuery<Result, Query>(
   cache: Cache,
@@ -32,7 +33,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
     credentials: 'include' as const,
     // headers: {
     //   Authorization: ctx
-    //     ? `Bearer ${ctx?.req?.headers?.Authorization ?? ""}`
+    //     ? `Bea`rer ${ctx?.req?.headers?.Authorization ?? ""}`
     //     : localStorage.getItem("token") ?? "",
     // }
   },
@@ -40,6 +41,15 @@ export const createUrqlClient = (ssrExchange: any) => ({
     dedupExchange,
     // Replace the default cacheExchange with the new one
     cacheExchange({
+      keys: {
+        PaginatedPosts: () => null
+      },
+      resolvers: {
+        Query: {
+          posts: cursorPagination()
+        }
+      },
+
       updates: {
         Mutation: {
           logout: (_result, args, cache, info) => {
