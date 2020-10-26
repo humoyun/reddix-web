@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Flex, Box, Heading } from '@chakra-ui/core'
+import { Flex, Box, Heading, Avatar, Text } from '@chakra-ui/core'
 import Downvote from '../icons/arrow-down.svg'
 import Upvote from '../icons/arrow-up.svg'
+import Dot from '../icons/dot.svg'
 import styled from '@emotion/styled'
 import PostFooter from './PostFooter'
 
@@ -46,12 +47,28 @@ const Rightbox = styled.div`
   flex-direction: column;
 `
 
-const PostHeader = styled(FlexCore)`
-  height: 100%;
+const PostHeader = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 30px;
+
+  span.header-item {
+    margin-left: 4px;
+
+    &.community-link {
+      font-weight: bold;
+      font-size: 14px;
+    }
+    
+    &.community-link:hover {
+      text-decoration: underline;
+    }
+  }
 `
 const PostContent = styled(FlexCore)`
-  height: 100%;
   flex-direction: column;
+  margin: 10px 0;
 `
 
 export const Post = ({ data }: PostProps) => {
@@ -108,7 +125,10 @@ export const Post = ({ data }: PostProps) => {
         borderBottomRightRadius={2}
       >
         <PostHeader className="post-header">
-
+          <span className="header-item avatar"><Avatar size="xs"></Avatar></span>
+          <span className="header-item community-link"><a href="">r/bbcnews</a></span>
+          <span className="header-item divider-dot"><Dot width={8} height={8} /></span>
+          <span className="header-item text"><Text fontSize={12} color="#ccc">Posted by u/zendesk 12 hours ago</Text></span>
         </PostHeader>
 
         <PostContent className="post-content" onClick={() => handlePostClick()}>

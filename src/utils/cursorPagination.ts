@@ -44,7 +44,7 @@ export const cursorPagination = (): Resolver => {
     }) 
 
     return {
-      // __typename: 'PaginatedPosts', // very problematic
+      __typename: 'PaginatedPosts', // very problematic, comment this line and you can see the issue
       hasMore, 
       posts: results
     }

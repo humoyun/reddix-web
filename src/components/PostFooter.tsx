@@ -54,7 +54,7 @@ const PostFooter = ({ data }: PostProps) => {
   }
 
   return (
-    <Flex direction="row" align="center" h="100%" mt={2}>
+    <Flex direction="row" align="center" mt={2}>
       <PostButton onClick={(e) => command(e, 'give-award')}>
         <GiveAward
           style={{ fill: '#455A64' }}

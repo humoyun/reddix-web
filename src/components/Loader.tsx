@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-
+/**
+ * Source:
+ * https://codepen.io/jenning/pen/MbmyBy
+ */
 const Dummy = styled.div`
 *, *::before, *::after {
   box-sizing: border-box;
