@@ -41,9 +41,12 @@ export const createUrqlClient = (ssrExchange: any) => ({
     dedupExchange,
     // Replace the default cacheExchange with the new one
     cacheExchange({
+      // `keys` may be used to alter how Graphcache generates the key it uses for normalization for individual types. 
+      // The key generator function may also always return null when a type should always be embedded.
       keys: {
         PaginatedPosts: () => null
       },
+
       resolvers: {
         Query: {
           posts: cursorPagination()

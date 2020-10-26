@@ -5,6 +5,8 @@ import { createUrqlClient } from '../utils/createUrqlCLient'
 import { usePostsQuery } from '../generated/graphql'
 import { Post } from '../components/Post'
 import { PostInput } from '../components/PostInput'
+import Loader from '../components/Loader'
+
 
 type NS = string | null
 
@@ -28,6 +30,7 @@ const Index = () => {
       {!data ?
           <Flex w="100%" h={200} justify="center" align="center">
             <Heading size="md">Loading...</Heading>
+            <Loader></Loader>
           </Flex> :
           (<Box>
             {
@@ -56,4 +59,11 @@ const Index = () => {
   )
 }
 
+/**
+ *  Unless the component that is being wrapped already has a `getInitialProps` method, 
+ * next-urql won't add its own SSR logic (which automatically fetches queries during 
+ * server-side rendering). 
+ *  This can be explicitly enabled by passing the { ssr: true } 
+ * option as a second argument to withUrqlClient
+ */
 export default withUrqlClient(createUrqlClient, { ssr: true })(Index)
