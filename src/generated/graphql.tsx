@@ -1,5 +1,5 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import gql from 'graphql-tag'
+import * as Urql from 'urql'
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -299,17 +299,19 @@ export type PostsQuery = (
 );
 
 export const RegularErrorFragmentDoc = gql`
-    fragment RegularError on FieldError {
-  field
-  message
-}
-    `;
+  fragment RegularError on FieldError {
+    field
+    message
+  }
+`
+
 export const RegularMemberFragmentDoc = gql`
-    fragment RegularMember on Member {
-  id
-  username
-}
-    `;
+  fragment RegularMember on Member {
+    id
+    username
+  }
+`
+
 export const RegularMemberResponseFragmentDoc = gql`
     fragment RegularMemberResponse on UserResponse {
   errors {
@@ -319,19 +321,21 @@ export const RegularMemberResponseFragmentDoc = gql`
     ...RegularMember
   }
 }
-    ${RegularErrorFragmentDoc}
-${RegularMemberFragmentDoc}`;
+${RegularErrorFragmentDoc}
+${RegularMemberFragmentDoc}`
+
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
     ...RegularMemberResponse
   }
 }
-    ${RegularMemberResponseFragmentDoc}`;
+${RegularMemberResponseFragmentDoc}`
 
 export function useChangePasswordMutation() {
-  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
-};
+  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument)
+}
+
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
@@ -344,20 +348,22 @@ export const CreatePostDocument = gql`
     updatedAt
   }
 }
-    `;
+    `
 
 export function useCreatePostMutation() {
-  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
-};
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument)
+}
+
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
-    `;
+`
 
 export function useForgotPasswordMutation() {
-  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
-};
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument)
+}
+
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -370,20 +376,20 @@ export const LoginDocument = gql`
     }
   }
 }
-    ${RegularMemberFragmentDoc}`;
+${RegularMemberFragmentDoc}`
 
 export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-};
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
+}
 export const LogoutDocument = gql`
     mutation Logout {
   logout
 }
-    `;
+    `
 
 export function useLogoutMutation() {
-  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
-};
+  return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument)
+}
 export const RegisterDocument = gql`
     mutation Register($options: UserInput!) {
   register(args: $options) {
@@ -396,11 +402,11 @@ export const RegisterDocument = gql`
     }
   }
 }
-    ${RegularMemberFragmentDoc}`;
+${RegularMemberFragmentDoc}`
 
 export function useRegisterMutation() {
-  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
-};
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument)
+}
 export const UpdatePostDocument = gql`
     mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
   updatePost(id: $id, title: $title, text: $text) {
@@ -412,39 +418,41 @@ export const UpdatePostDocument = gql`
     createdAt
   }
 }
-    `;
+`
 
 export function useUpdatePostMutation() {
-  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
-};
-export const MeDocument = gql`
-    query Me {
-  me {
-    ...RegularMember
-  }
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument)
 }
-    ${RegularMemberFragmentDoc}`;
+export const MeDocument = gql`
+  query Me {
+    me {
+      ...RegularMember
+    }
+  }
+${RegularMemberFragmentDoc}`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-};
-export const PostDocument = gql`
-    query Post($id: Int!) {
-  post(id: $id) {
-    id
-    title
-    text
-    points
-    creatorId
-    createdAt
-    updatedAt
-  }
+  return Urql.useQuery<MeQuery>({ query: MeDocument, ...options })
 }
-    `;
+
+export const PostDocument = gql`
+  query Post($id: Int!) {
+    post(id: $id) {
+      id
+      title
+      text
+      points
+      creatorId
+      createdAt
+      updatedAt
+    }
+  }
+`
 
 export function usePostQuery(options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<PostQuery>({ query: PostDocument, ...options });
-};
+  return Urql.useQuery<PostQuery>({ query: PostDocument, ...options })
+}
+
 export const PostsDocument = gql`
     query Posts($limit: Int!, $cursor: String) {
   posts(limit: $limit, cursor: $cursor) {
@@ -462,8 +470,8 @@ export const PostsDocument = gql`
     }
   }
 }
-    `;
+    `
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-};
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options })
+}

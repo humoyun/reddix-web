@@ -1,6 +1,7 @@
 import { dedupExchange, Exchange, fetchExchange } from 'urql'
 import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from '../generated/graphql'
 import { cacheExchange } from '@urql/exchange-graphcache'
+import { devtoolsExchange } from '@urql/devtools'
 import { pipe, tap } from 'wonka'
 import { cursorPagination } from './cursorPagination'
 
@@ -38,6 +39,7 @@ export const createUrqlClient = (ssrExchange: any) => ({
     // }
   },
   exchanges: [
+    devtoolsExchange,
     dedupExchange,
     // Replace the default cacheExchange with the new one
     cacheExchange({
