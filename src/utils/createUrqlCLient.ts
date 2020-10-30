@@ -26,7 +26,6 @@ const errorExchange: Exchange = ({ forward }) => (ops$) => {
   )
 }
 
-
 export const createUrqlClient = (ssrExchange: any) => ({
   // requestPolicy: "cache-first" | "cache-only" | "network-only" | "cache-and-network",
   url: 'http://localhost:4400/graphql',
