@@ -29,7 +29,7 @@ const Register: React.FC<registerProps> = ({ }) => {
           const resp = await register({ options: values })
           if (resp.data?.register.errors) {
             setErrors(toErrorMap(resp.data?.register.errors))
-          } else if (resp.data?.register.member) {
+          } else if (resp.data?.register.user) {
             router.push('/')
           }
         }}

@@ -7,7 +7,7 @@ query Posts($limit: Int!, $cursor: String) {
       textSnippet
       points
       createdAt
-      creator {
+      owner {
         id
         username
       }

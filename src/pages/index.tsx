@@ -7,11 +7,10 @@ import { Post } from '../components/Post'
 import { PostInput } from '../components/PostInput'
 import Loader from '../components/Loader'
 
-
 type NS = string | null
 
 const Index = () => { 
-  const [variables, setVariables] = useState({limit: 5, cursor: null})
+  const [variables, setVariables] = useState({ limit: 5, cursor: null })
   const [{ data, fetching }] = usePostsQuery({ variables })
 
   console.log('usePostsQuery ', data)

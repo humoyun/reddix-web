@@ -4,7 +4,7 @@ query Post($id: Int!) {
     title
     text
     points
-    creatorId
+    ownerId
     createdAt
     updatedAt
   }

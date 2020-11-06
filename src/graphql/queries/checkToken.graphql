@@ -1,0 +1,9 @@
+query CheckToken($token: String!) {
+  checkToken(token: $token) {
+    error {
+      field
+      message
+    }
+    success
+  }
+}

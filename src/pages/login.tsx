@@ -31,7 +31,7 @@ const Login: React.FC<loginProps> = ({}) => {
           const resp = await login(values)
           if (resp.data?.login.errors) {
             setErrors(toErrorMap(resp.data?.login.errors))
-          } else if (resp.data?.login.member) {
+          } else if (resp.data?.login.user) {
             if (typeof router.query.next === 'string') {
               router.push(router.query.next)
             } else {

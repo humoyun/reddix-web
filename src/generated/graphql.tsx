@@ -14,9 +14,22 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<Member>;
+  getSubreddixs?: Maybe<Array<Subreddix>>;
+  getSubreddix: Subreddix;
+  me?: Maybe<User>;
+  checkToken: TokenResponse;
   posts: PaginatedPosts;
   post?: Maybe<Post>;
+};
+
+
+export type QueryGetSubreddixArgs = {
+  slug: Scalars['String'];
+};
+
+
+export type QueryCheckTokenArgs = {
+  token: Scalars['String'];
 };
 
 
@@ -30,13 +43,40 @@ export type QueryPostArgs = {
   id: Scalars['Int'];
 };
 
-export type Member = {
-  __typename?: 'Member';
+export type Subreddix = {
+  __typename?: 'Subreddix';
   id: Scalars['Float'];
-  username: Scalars['String'];
-  email: Scalars['String'];
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  rules: Array<Scalars['String']>;
+  flairs: Array<Scalars['String']>;
+  ownerId: Scalars['String'];
+  owner: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  username: Scalars['String'];
+  email: Scalars['String'];
+  verified: Scalars['Boolean'];
+  createdAt: Scalars['String'];
+  updatedAt: Scalars['String'];
+  isActive: Scalars['Boolean'];
+};
+
+export type TokenResponse = {
+  __typename?: 'TokenResponse';
+  error?: Maybe<FieldError>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+export type FieldError = {
+  __typename?: 'FieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
 };
 
 export type PaginatedPosts = {
@@ -47,12 +87,16 @@ export type PaginatedPosts = {
 
 export type Post = {
   __typename?: 'Post';
-  id: Scalars['Float'];
+  id: Scalars['String'];
   title: Scalars['String'];
   text: Scalars['String'];
+  html: Scalars['String'];
+  flair: Scalars['String'];
+  type: Scalars['String'];
+  linkPreview: Scalars['String'];
   points: Scalars['Float'];
-  creatorId: Scalars['Float'];
-  creator: Member;
+  ownerId: Scalars['String'];
+  owner: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   textSnippet: Scalars['String'];
@@ -60,6 +104,8 @@ export type Post = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createSubreddix: Subreddix;
+  joinSubreddix: SubreddixJoinResponse;
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
@@ -68,6 +114,19 @@ export type Mutation = {
   createPost: Post;
   updatePost?: Maybe<Post>;
   deletePost: Scalars['Boolean'];
+  vote: Scalars['Boolean'];
+  updateVote: Scalars['Boolean'];
+};
+
+
+export type MutationCreateSubreddixArgs = {
+  name: Scalars['String'];
+};
+
+
+export type MutationJoinSubreddixArgs = {
+  slug: Scalars['String'];
+  join: Scalars['Boolean'];
 };
 
 
@@ -109,16 +168,28 @@ export type MutationDeletePostArgs = {
   id: Scalars['Float'];
 };
 
+
+export type MutationVoteArgs = {
+  val: Scalars['Int'];
+  postId: Scalars['Int'];
+};
+
+
+export type MutationUpdateVoteArgs = {
+  val: Scalars['Int'];
+  postId: Scalars['Int'];
+};
+
+export type SubreddixJoinResponse = {
+  __typename?: 'SubreddixJoinResponse';
+  errors?: Maybe<Array<Scalars['String']>>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
 export type UserResponse = {
   __typename?: 'UserResponse';
   errors?: Maybe<Array<FieldError>>;
-  member?: Maybe<Member>;
-};
-
-export type FieldError = {
-  __typename?: 'FieldError';
-  field: Scalars['String'];
-  message: Scalars['String'];
+  user?: Maybe<User>;
 };
 
 export type UserInput = {
@@ -137,19 +208,19 @@ export type RegularErrorFragment = (
   & Pick<FieldError, 'field' | 'message'>
 );
 
-export type RegularMemberFragment = (
-  { __typename?: 'Member' }
-  & Pick<Member, 'id' | 'username'>
+export type RegularUserFragment = (
+  { __typename?: 'User' }
+  & Pick<User, 'id' | 'username'>
 );
 
-export type RegularMemberResponseFragment = (
+export type RegularUserResponseFragment = (
   { __typename?: 'UserResponse' }
   & { errors?: Maybe<Array<(
     { __typename?: 'FieldError' }
     & RegularErrorFragment
-  )>>, member?: Maybe<(
-    { __typename?: 'Member' }
-    & RegularMemberFragment
+  )>>, user?: Maybe<(
+    { __typename?: 'User' }
+    & RegularUserFragment
   )> }
 );
 
@@ -163,7 +234,7 @@ export type ChangePasswordMutation = (
   { __typename?: 'Mutation' }
   & { changePassword: (
     { __typename?: 'UserResponse' }
-    & RegularMemberResponseFragment
+    & RegularUserResponseFragment
   ) }
 );
 
@@ -176,7 +247,7 @@ export type CreatePostMutation = (
   { __typename?: 'Mutation' }
   & { createPost: (
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'creatorId' | 'createdAt' | 'updatedAt'>
+    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'ownerId' | 'createdAt' | 'updatedAt'>
   ) }
 );
 
@@ -203,9 +274,9 @@ export type LoginMutation = (
     & { errors?: Maybe<Array<(
       { __typename?: 'FieldError' }
       & Pick<FieldError, 'field' | 'message'>
-    )>>, member?: Maybe<(
-      { __typename?: 'Member' }
-      & RegularMemberFragment
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
     )> }
   ) }
 );
@@ -230,9 +301,9 @@ export type RegisterMutation = (
     & { errors?: Maybe<Array<(
       { __typename?: 'FieldError' }
       & Pick<FieldError, 'field' | 'message'>
-    )>>, member?: Maybe<(
-      { __typename?: 'Member' }
-      & RegularMemberFragment
+    )>>, user?: Maybe<(
+      { __typename?: 'User' }
+      & RegularUserFragment
     )> }
   ) }
 );
@@ -248,8 +319,25 @@ export type UpdatePostMutation = (
   { __typename?: 'Mutation' }
   & { updatePost?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'creatorId' | 'createdAt'>
+    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'ownerId' | 'createdAt'>
   )> }
+);
+
+export type CheckTokenQueryVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type CheckTokenQuery = (
+  { __typename?: 'Query' }
+  & { checkToken: (
+    { __typename?: 'TokenResponse' }
+    & Pick<TokenResponse, 'success'>
+    & { error?: Maybe<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )> }
+  ) }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -258,8 +346,8 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
-    { __typename?: 'Member' }
-    & RegularMemberFragment
+    { __typename?: 'User' }
+    & RegularUserFragment
   )> }
 );
 
@@ -272,7 +360,7 @@ export type PostQuery = (
   { __typename?: 'Query' }
   & { post?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'creatorId' | 'createdAt' | 'updatedAt'>
+    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'ownerId' | 'createdAt' | 'updatedAt'>
   )> }
 );
 
@@ -290,52 +378,48 @@ export type PostsQuery = (
     & { posts: Array<(
       { __typename?: 'Post' }
       & Pick<Post, 'id' | 'title' | 'textSnippet' | 'points' | 'createdAt'>
-      & { creator: (
-        { __typename?: 'Member' }
-        & Pick<Member, 'id' | 'username'>
+      & { owner: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'username'>
       ) }
     )> }
   ) }
 );
 
 export const RegularErrorFragmentDoc = gql`
-  fragment RegularError on FieldError {
-    field
-    message
-  }
-`
-
-export const RegularMemberFragmentDoc = gql`
-  fragment RegularMember on Member {
-    id
-    username
-  }
-`
-
-export const RegularMemberResponseFragmentDoc = gql`
-    fragment RegularMemberResponse on UserResponse {
+    fragment RegularError on FieldError {
+  field
+  message
+}
+    `
+export const RegularUserFragmentDoc = gql`
+    fragment RegularUser on User {
+  id
+  username
+}
+    `
+export const RegularUserResponseFragmentDoc = gql`
+    fragment RegularUserResponse on UserResponse {
   errors {
     ...RegularError
   }
-  member {
-    ...RegularMember
+  user {
+    ...RegularUser
   }
 }
-${RegularErrorFragmentDoc}
-${RegularMemberFragmentDoc}`
-
+    ${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
-    ...RegularMemberResponse
+    ...RegularUserResponse
   }
 }
-${RegularMemberResponseFragmentDoc}`
+    ${RegularUserResponseFragmentDoc}`
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument)
 }
-
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
@@ -343,7 +427,7 @@ export const CreatePostDocument = gql`
     title
     text
     points
-    creatorId
+    ownerId
     createdAt
     updatedAt
   }
@@ -353,17 +437,15 @@ export const CreatePostDocument = gql`
 export function useCreatePostMutation() {
   return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument)
 }
-
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
-`
+    `
 
 export function useForgotPasswordMutation() {
   return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument)
 }
-
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -371,16 +453,17 @@ export const LoginDocument = gql`
       field
       message
     }
-    member {
-      ...RegularMember
+    user {
+      ...RegularUser
     }
   }
 }
-${RegularMemberFragmentDoc}`
+${RegularUserFragmentDoc}`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
 }
+
 export const LogoutDocument = gql`
     mutation Logout {
   logout
@@ -397,16 +480,17 @@ export const RegisterDocument = gql`
       field
       message
     }
-    member {
-      ...RegularMember
+    user {
+      ...RegularUser
     }
   }
 }
-${RegularMemberFragmentDoc}`
+${RegularUserFragmentDoc}`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument)
 }
+
 export const UpdatePostDocument = gql`
     mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
   updatePost(id: $id, title: $title, text: $text) {
@@ -414,7 +498,7 @@ export const UpdatePostDocument = gql`
     title
     text
     points
-    creatorId
+    ownerId
     createdAt
   }
 }
@@ -423,13 +507,30 @@ export const UpdatePostDocument = gql`
 export function useUpdatePostMutation() {
   return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument)
 }
+
+export const CheckTokenDocument = gql`
+  query CheckToken($token: String!) {
+    checkToken(token: $token) {
+      error {
+        field
+        message
+      }
+      success
+    }
+  }
+`
+
+export function useCheckTokenQuery(options: Omit<Urql.UseQueryArgs<CheckTokenQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<CheckTokenQuery>({ query: CheckTokenDocument, ...options })
+}
+
 export const MeDocument = gql`
   query Me {
     me {
-      ...RegularMember
+      ...RegularUser
     }
   }
-${RegularMemberFragmentDoc}`
+${RegularUserFragmentDoc}`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options })
@@ -442,7 +543,7 @@ export const PostDocument = gql`
       title
       text
       points
-      creatorId
+      ownerId
       createdAt
       updatedAt
     }
@@ -454,23 +555,23 @@ export function usePostQuery(options: Omit<Urql.UseQueryArgs<PostQueryVariables>
 }
 
 export const PostsDocument = gql`
-    query Posts($limit: Int!, $cursor: String) {
-  posts(limit: $limit, cursor: $cursor) {
-    hasMore
-    posts {
-      id
-      title
-      textSnippet
-      points
-      createdAt
-      creator {
+  query Posts($limit: Int!, $cursor: String) {
+    posts(limit: $limit, cursor: $cursor) {
+      hasMore
+      posts {
         id
-        username
+        title
+        textSnippet
+        points
+        createdAt
+        owner {
+          id
+          username
+        }
       }
     }
   }
-}
-    `
+`
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options })

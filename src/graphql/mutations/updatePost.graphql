@@ -4,7 +4,7 @@ mutation UpdatePost($id: Float!, $title: String!, $text: String!) {
     title
     text
     points
-    creatorId
+    ownerId
     createdAt
   }
 }

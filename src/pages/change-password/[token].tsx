@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import { BodyWrapper } from '../../components/BodyWrapper'
 import { withUrqlClient } from 'next-urql'
@@ -7,14 +7,17 @@ import { useRouter } from 'next/router'
 import { toErrorMap } from '../../utils/errorMapper'
 import { Formik, Form } from 'formik'
 import { InputField } from '../../components/InputField'
-import { useChangePasswordMutation } from '../../generated/graphql'
-import { Flex, Box, Button } from '@chakra-ui/core'
+import { useChangePasswordMutation, useCheckTokenQuery } from '../../generated/graphql'
+import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import NextLink from 'next/link'
  
 const ChangePassword: NextPage = () => { 
-  const [, changePassword] = useChangePasswordMutation()
   const router = useRouter()
+  const [, changePassword] = useChangePasswordMutation()
   const [tokenError, setTokenError] = useState('')
+  const [{ data, fetching }] = useCheckTokenQuery({ variables: { token: router.query.token }})
+  console.log('data useCheckTokenQuery ', data)
+  console.log('data window ', window.location)
 
   return (
     <BodyWrapper variant="small">
@@ -35,7 +38,7 @@ const ChangePassword: NextPage = () => {
             }
 
             setErrors(errorMap)
-          } else if (resp.data.changePassword.member) {
+          } else if (resp.data.changePassword.user) {
             router.push('/')
           }
         }}
@@ -70,8 +73,16 @@ const ChangePassword: NextPage = () => {
           </Form>
         )}
       </Formik>
+      
+      <Box>
+        <Heading size="2">
+          Your token has been already expired
+        </Heading>
+        
+      </Box>
+
     </BodyWrapper>
   )
 }
 
-export default withUrqlClient(createUrqlClient)(ChangePassword)
+export default withUrqlClient(createUrqlClient, { ssr: true })(ChangePassword)

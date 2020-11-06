@@ -4,8 +4,8 @@ mutation Register($options: UserInput!) {
       field
       message
     }
-    member {
-      ...RegularMember
+    user {
+      ...RegularUser
     }
   }
 }

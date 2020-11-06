@@ -4,8 +4,8 @@ mutation Login($usernameOrEmail: String!, $password: String!) {
       field
       message
     }
-    member {
-      ...RegularMember
+    user {
+      ...RegularUser
     }
   }
 }
