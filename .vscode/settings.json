@@ -10,5 +10,8 @@
     "html",
     "markdown"
   ],
-  "vetur.validation.template": false
+  "vetur.validation.template": false,
+  "cSpell.words": [
+    "Formik"
+  ]
 }

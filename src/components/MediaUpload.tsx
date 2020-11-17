@@ -6,9 +6,10 @@ interface MediaUploadProps {
   drag?: boolean;
   type?: string;
   accept?: string;
+  encType?: string
 }
 
-const MediaUpload = (props: MediaUploadProps) => {
+const MediaUpload = (props: MediaUploadProps): JSX.Element => {
   return (
     <Box>
       <input

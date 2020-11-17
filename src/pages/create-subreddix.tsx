@@ -17,7 +17,7 @@ const CreateSubreddix: React.FC<any> = ({ }) => {
   useIsAuth()
 
   return (
-    <BodyWrapper>
+    <BodyWrapper> 
       Create New Subreddix
       <Formik
         initialValues={{ title: '', text: '' }}
@@ -31,10 +31,11 @@ const CreateSubreddix: React.FC<any> = ({ }) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <InputField name="title" placeholder="title" label="Title" />
+            <InputField type="text" name="title" placeholder="title" label="Title" />
             <Box>
               <InputField
                 textarea
+                type="text"
                 name="text"
                 placeholder="text..."
                 label="Body"

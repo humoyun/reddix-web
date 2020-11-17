@@ -1,0 +1,11 @@
+mutation CreateSubreddix() {
+  createSubreddix() {
+    id
+    title
+    text
+    points
+    ownerId
+    createdAt
+    updatedAt
+  }
+}

@@ -10,7 +10,7 @@ import {
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  textarea: boolean;
+  textarea?: boolean;
   name: string;
   type: string;
 };

@@ -13,7 +13,9 @@ import { toErrorMap } from '../utils/errorMapper'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '../utils/createUrqlCLient'
 
-// interface loginProps {}
+interface loginProps {
+  no?: any
+}
 
 // I should use this for form box
 // background: linear-gradient(to bottom,#fff 0,#f7f9f9 45%); for back-color  
@@ -32,6 +34,7 @@ const Login: React.FC<loginProps> = ({}) => {
           if (resp.data?.login.errors) {
             setErrors(toErrorMap(resp.data?.login.errors))
           } else if (resp.data?.login.user) {
+            // 
             if (typeof router.query.next === 'string') {
               router.push(router.query.next)
             } else {
@@ -46,6 +49,7 @@ const Login: React.FC<loginProps> = ({}) => {
               name="usernameOrEmail"
               placeholder="username or email"
               label="Username Or Email"
+              type="text"
             />
             <Box mt={4}>
               <InputField

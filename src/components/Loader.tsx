@@ -12,8 +12,8 @@ const Dummy = styled.div`
 `
 
 const Wrapper = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   position: relative;
   margin: auto;
 
@@ -51,11 +51,11 @@ const Wrapper = styled.div`
 
 @keyframes foregroundCircle {
 	0% {
-		transform: scale(0.3) rotate(0deg);
+		transform: scale(0.2) rotate(0deg);
 	}
 
 	12.5% {
-		transform: scale(0.3) rotate(180deg);
+		transform: scale(0.2) rotate(180deg);
 	}
 
 	25%, 50% {
@@ -63,22 +63,22 @@ const Wrapper = styled.div`
 	}
 
 	50% {
-		transform: scale(1) rotate(720deg);
+		transform: scale(0.8) rotate(720deg);
 	}
 
 	100% {
-		transform: scale(0.3) rotate(1800deg);
+		transform: scale(0.2) rotate(1800deg);
 		opacity: 0.5;
 	}
 }
 
 @keyframes backgroundCircle {
 	12.5% {
-		transform: scale(0.3);
+		transform: scale(0.2);
 	}
 
 	90%, 100% {
-		transform: scale(2);
+		transform: scale(1.8);
 		opacity: 0;
 	}
 }
@@ -87,7 +87,7 @@ const Wrapper = styled.div`
 export default () => {
   return (
     <Dummy>
-      <Wrapper className="reddir-loader">
+      <Wrapper className="reddix-loader">
       </Wrapper>
     </Dummy>
   )
