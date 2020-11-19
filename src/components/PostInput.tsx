@@ -28,15 +28,20 @@ export const PostInput = (props: any) => {
         src="https://bit.ly/ryan-florence"
       ></Avatar>
 
-      <Input size="sm" onClick={(e) => handleClick(e, 'text')}></Input>
+      <Flex flex="2">
+        <Input size="sm" onClick={(e) => handleClick(e, 'text')}></Input>
+      </Flex>
 
-      <Flex ml={2} w={60} justifyContent="space-around">
-        <MediaIcon
-          onClick={(e) => handleClick(e, 'media')}
-          style={{ fill: '#ccc', cursor: 'pointer' }}
-          width={20}
-          height={20}
-        />
+      <Flex ml={3} justifyContent="space-around">
+        <Box mr={2}>
+          <MediaIcon
+            onClick={(e) => handleClick(e, 'media')}
+            style={{ fill: '#ccc', cursor: 'pointer' }}
+            width={20}
+            height={20}
+          />
+        </Box>
+
         <LinkIcon
           onClick={(e) => handleClick(e, 'link')}
           style={{ fill: '#ccc', cursor: 'pointer' }}

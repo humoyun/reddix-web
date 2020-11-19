@@ -3,7 +3,7 @@ import { Box, Link, Flex, Button, InputGroup, InputLeftElement, Input, Heading }
 import NextLink from 'next/link'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import SearchIcon from '../icons/search.svg'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 export interface NavBarProps {
   dummy?: string

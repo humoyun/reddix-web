@@ -22,7 +22,7 @@ const PostButton = styled.div`
   font-size: 10px;
   border-radius: 3px;
   transition: background-color 0.2s ease-in;
-  margin-left: 2px;
+  margin-left: 4px;
 
   span {
     display: inline-block;
