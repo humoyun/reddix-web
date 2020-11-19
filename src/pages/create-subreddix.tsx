@@ -9,10 +9,12 @@ import { createUrqlClient } from '../utils/createUrqlCLient'
 import { InputField } from '../components/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import { BodyWrapper } from '../components/BodyWrapper'
+import { useCreateSubreddixMutation } from '../generated/graphql'
+
 
 const CreateSubreddix: React.FC<any> = ({ }) => {
-  const router = useRouter()
-  // const [, createPost] = useCreatePostMutation()
+  // const router = useRouter()
+  const [, createSubreddix] = useCreateSubreddixMutation()
   
   useIsAuth()
 
@@ -20,13 +22,12 @@ const CreateSubreddix: React.FC<any> = ({ }) => {
     <BodyWrapper> 
       Create New Subreddix
       <Formik
-        initialValues={{ title: '', text: '' }}
+        initialValues={{ name: '' }}
         onSubmit={async (values) => {
-          const { error } = await createSubreddix({ input: values })
+          const { data, error } = await createSubreddix({ name })
 
-          if (!error) {
-            router.push('/') // ?
-          }
+          console.log(data)
+          console.log(error)
         }}
       >
         {({ isSubmitting }) => (

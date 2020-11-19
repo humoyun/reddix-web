@@ -3,8 +3,7 @@ import { Box, Link, Flex, Button, InputGroup, InputLeftElement, Input, Heading }
 import NextLink from 'next/link'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import SearchIcon from '../icons/search.svg'
-import ReddirLogo from '../icons/reddit-social-logo.svg'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 export interface NavBarProps {
   dummy?: string
@@ -68,11 +67,12 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
       top={0}
     >
       <Flex alignItems="center" flex={1}>
-        <Box ml={4}>
-          <ReddirLogo  onClick={goHome} width={38} height={38} style={{ fill: 'black', cursor: 'pointer' }} />
+        <Box ml={4} onClick={goHome}>
+          {/* <ReddirLogo width={38} height={38} style={{ fill: 'black',  }} /> */}
+          <img src="/reddix.png" style={{ width: 45, height: 45, cursor: 'pointer' }} />
         </Box>
         <Heading ml={2} as="h3" size="md">
-          Reddir
+          Reddix
         </Heading>
       </Flex>
 

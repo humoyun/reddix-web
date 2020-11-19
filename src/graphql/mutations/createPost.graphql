@@ -1,11 +1,20 @@
 mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
-    id
-    title
-    text
-    points
-    ownerId
-    createdAt
-    updatedAt
+    errors {
+      field
+      message
+    }
+    post {
+      id
+      title
+      text
+      type
+      mediaUrl
+      linkPreview
+      points
+      ownerId
+      createdAt
+      updatedAt
+    }
   }
 }

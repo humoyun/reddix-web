@@ -6,19 +6,13 @@ import PostSave from '../icons/post-save.svg'
 import PostUnsave from '../icons/post-unsave.svg'
 import Share from '../icons/arrow-share.svg'
 import Comments from '../icons/comments.svg'
+import { Post } from '../generated/graphql'
 
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 
 interface PostProps {
-  data: PostData;
-}
-
-export interface PostData {
-  id: string;
-  title: string;
-  textSnippet: string;
-  points: number;
+  data: Post;
 }
 
 const PostButton = styled.div`  

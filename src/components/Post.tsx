@@ -6,16 +6,10 @@ import Upvote from '../icons/arrow-up.svg'
 import Dot from '../icons/dot.svg'
 import styled from '@emotion/styled'
 import PostFooter from './PostFooter'
+import { Post } from '../generated/graphql'
 
 interface PostProps {
-  data: PostData;
-}
-
-export interface PostData {
-  id: string;
-  title: string;
-  textSnippet: string;
-  points: number;
+  post: Partial<Post>;
 }
 
 const FlexCore = styled.div`
@@ -71,13 +65,13 @@ const PostContent = styled(FlexCore)`
   margin: 10px 0;
 `
 
-export const Post = ({ data }: PostProps) => {
-  const [vote, setVote] = useState(data.points)
+export const PostComponent = ({ post }: PostProps) => {
+  const [vote, setVote] = useState(post.points)
   const router = useRouter()
 
   const handlePostClick = () => {
     console.log('handlePostClick')
-    router.push(`/post/${data.id}`)
+    router.push(`/post/${post.id}`)
   }
 
 
@@ -133,9 +127,9 @@ export const Post = ({ data }: PostProps) => {
 
         <PostContent className="post-content" onClick={() => handlePostClick()}>
           <Heading as="h4" size="sm">
-            {data.title}
+            {post.title}
           </Heading>
-          <Box fontSize={14}>{data.textSnippet}</Box>
+          <Box fontSize={14}>{post.text?.slice(0, 100)}</Box>
         </PostContent>
 
         <PostFooter className="post-footer">

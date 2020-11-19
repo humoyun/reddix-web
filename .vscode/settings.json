@@ -12,6 +12,8 @@
   ],
   "vetur.validation.template": false,
   "cSpell.words": [
-    "Formik"
+    "Formik",
+    "Rightbox",
+    "Unsave"
   ]
 }

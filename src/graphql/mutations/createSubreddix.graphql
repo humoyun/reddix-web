@@ -1,11 +1,14 @@
-mutation CreateSubreddix() {
-  createSubreddix() {
-    id
-    title
-    text
-    points
-    ownerId
-    createdAt
-    updatedAt
+mutation CreateSubreddix($name: String!) {
+  createSubreddix(name: $name) {
+    errors
+    data {
+      id
+      name
+      flairs
+      rules
+      ownerId
+      createdAt
+      updatedAt
+    }
   }
 }

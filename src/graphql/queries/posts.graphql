@@ -4,7 +4,9 @@ query Posts($limit: Int!, $cursor: String) {
     posts {
       id
       title
-      textSnippet
+      type
+      linkPreview
+      flair
       points
       createdAt
       owner {
