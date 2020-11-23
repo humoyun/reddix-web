@@ -101,6 +101,7 @@ export type Post = {
   owner: User;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
+  textSnippet: Scalars['String'];
 };
 
 export type Mutation = {
@@ -274,7 +275,10 @@ export type CreatePostMutation = (
   ) }
 );
 
-export type CreateSubreddixMutationVariables = Exact<{name: Scalars['String']}>;
+export type CreateSubreddixMutationVariables = Exact<{
+  name: Scalars['String'];
+}>;
+
 
 export type CreateSubreddixMutation = (
   { __typename?: 'Mutation' }
@@ -414,7 +418,7 @@ export type PostsQuery = (
     & Pick<PaginatedPosts, 'hasMore'>
     & { posts: Array<(
       { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'title' | 'type' | 'linkPreview' | 'flair' | 'points' | 'createdAt'>
+      & Pick<Post, 'id' | 'title' | 'text' | 'type' | 'flair' | 'points' | 'createdAt'>
       & { owner: (
         { __typename?: 'User' }
         & Pick<User, 'id' | 'username'>
@@ -428,15 +432,13 @@ export const RegularErrorFragmentDoc = gql`
   field
   message
 }
-`
-
+    `;
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
   username
 }
-`;
-
+    `;
 export const RegularUserResponseFragmentDoc = gql`
     fragment RegularUserResponse on UserResponse {
   errors {
@@ -505,7 +507,6 @@ export const CreateSubreddixDocument = gql`
 export function useCreateSubreddixMutation() {
   return Urql.useMutation<CreateSubreddixMutation, CreateSubreddixMutationVariables>(CreateSubreddixDocument);
 };
-
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -569,7 +570,7 @@ export const UpdatePostDocument = gql`
     createdAt
   }
 }
-    `;
+`;
 
 export function useUpdatePostMutation() {
   return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
@@ -624,8 +625,8 @@ export const PostsDocument = gql`
     posts {
       id
       title
+      text
       type
-      linkPreview
       flair
       points
       createdAt

@@ -9,10 +9,11 @@ import Comments from '../icons/comments.svg'
 import { Post } from '../generated/graphql'
 
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 interface PostProps {
   data: Post;
+  children?: React.ReactDOM
 }
 
 const PostButton = styled.div`  
@@ -34,7 +35,7 @@ const PostButton = styled.div`
   }
 `
 
-const PostFooter = ({ data }: PostProps) => {
+const PostFooter = (props: PostProps) => {
   const [isSaved, setIsSaved] = useState(Math.round(Math.random()))
 
   const command = (e: React.SyntheticEvent, cmd: string) => {
