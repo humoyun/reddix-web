@@ -40,7 +40,7 @@ export type QueryPostsArgs = {
 
 
 export type QueryPostArgs = {
-  id: Scalars['Int'];
+  id: Scalars['String'];
 };
 
 export type Subreddix = {
@@ -63,9 +63,16 @@ export type User = {
   username: Scalars['String'];
   email: Scalars['String'];
   verified: Scalars['Boolean'];
+  votes: Array<Vote>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
   isActive: Scalars['Boolean'];
+};
+
+export type Vote = {
+  __typename?: 'Vote';
+  val: Scalars['Float'];
+  postId: Scalars['String'];
 };
 
 export type TokenResponse = {
@@ -90,7 +97,7 @@ export type Post = {
   __typename?: 'Post';
   id: Scalars['String'];
   title: Scalars['String'];
-  text: Scalars['String'];
+  text?: Maybe<Scalars['String']>;
   html: Scalars['String'];
   flair?: Maybe<Scalars['String']>;
   type: Scalars['String'];
@@ -173,7 +180,7 @@ export type MutationDeletePostArgs = {
 
 export type MutationVoteArgs = {
   val: Scalars['Int'];
-  postId: Scalars['Int'];
+  postId: Scalars['String'];
 };
 
 
@@ -393,7 +400,7 @@ export type MeQuery = (
 );
 
 export type PostQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['String'];
 }>;
 
 
@@ -401,7 +408,11 @@ export type PostQuery = (
   { __typename?: 'Query' }
   & { post?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'text' | 'points' | 'ownerId' | 'createdAt' | 'updatedAt'>
+    & Pick<Post, 'id' | 'title' | 'type' | 'text' | 'html' | 'points' | 'flair' | 'mediaUrl' | 'linkPreview' | 'createdAt' | 'updatedAt'>
+    & { owner: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'username'>
+    ) }
   )> }
 );
 
@@ -570,7 +581,7 @@ export const UpdatePostDocument = gql`
     createdAt
   }
 }
-`;
+    `;
 
 export function useUpdatePostMutation() {
   return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
@@ -602,13 +613,21 @@ export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'q
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
 };
 export const PostDocument = gql`
-    query Post($id: Int!) {
+    query Post($id: String!) {
   post(id: $id) {
     id
     title
+    type
     text
+    html
     points
-    ownerId
+    flair
+    mediaUrl
+    linkPreview
+    owner {
+      id
+      username
+    }
     createdAt
     updatedAt
   }

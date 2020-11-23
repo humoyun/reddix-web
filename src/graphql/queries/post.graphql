@@ -1,10 +1,18 @@
-query Post($id: Int!) {
+query Post($id: String!) {
   post(id: $id) {
     id
     title
+    type
     text
+    html
     points
-    ownerId
+    flair
+    mediaUrl
+    linkPreview
+    owner {
+      id
+      username
+    }
     createdAt
     updatedAt
   }

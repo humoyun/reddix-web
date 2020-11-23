@@ -1,8 +1,28 @@
 import React from 'react'
-import { Box, Flex, Button, Heading } from '@chakra-ui/core'
+import { Box, Flex, Button, Heading, Stack, Divider, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
+import styled from '@emotion/styled';
 import NextLink from 'next/link'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import { useRouter } from 'next/router'
+import DarkMode from '../icons/sun.svg'
+// import New from '../icons/new.svg'
+// import Rise from '../icons/rise.svg'
+import Rocket from '../icons/rocket.svg'
+import AllPosts from '../icons/all-chart.svg'
+
+
+const IconBox = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #EDF2F7
+  }
+`
 
 export interface NavBarProps {
   dummy?: string
@@ -40,7 +60,10 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
   } else { 
     body = (
       <Flex alignItems="center">
-        <Box mr={5}>{data.me.username}</Box>
+        <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
+          <AvatarBadge  boxSize="1.25em" bg="green.500" />
+        </Avatar>
+        <Box mr={5} px={2}>{data.me.username}</Box>
         <Button
           size="xs"
           isLoading={logoutFetching}
@@ -65,7 +88,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
       position="sticky"
       top={0}
     >
-      <Flex alignItems="center" flex={1}>
+      <Flex alignItems="center" flex={1} >
         <Box ml={4} onClick={goHome}>
           {/* <ReddirLogo width={38} height={38} style={{ fill: 'black',  }} /> */}
           <img src="/reddix.png" style={{ width: 45, height: 45, cursor: 'pointer' }} />
@@ -75,11 +98,44 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
         </Heading>
       </Flex>
 
-      {data?.me && (
-        <Box flex={3}>
-          {/* Search component TO-DO */}
-        </Box>
-      )}
+      <Box flex={4}>
+        {/* Search component TO-DO */}
+
+      </Box>
+
+      <Flex flex={1} justifyContent="center">
+
+        <Stack direction="row" p={2}>
+          <Tooltip hasArrow label="All" aria-label="All" fontSize="xs">
+            <IconBox>
+              <AllPosts
+                style={{ fill: '#455A64' }}
+                width={18}
+                height={18} />
+            </IconBox> 
+          </Tooltip>
+          <Tooltip hasArrow label="Best" aria-label="Best" fontSize="xs">
+            <IconBox>
+              <Rocket
+                style={{ fill: '#455A64' }}
+                width={18}
+                height={18} />     
+            </IconBox> 
+          </Tooltip>  
+        </Stack>
+        <hr />
+        <Stack direction="row" p={2}>
+          <Tooltip hasArrow label="Dark mode!" aria-label="Dark mode" fontSize="xs">
+            <IconBox>
+              <DarkMode 
+                style={{ fill: '#455A64' }}
+                width={18}
+                height={18} />
+            </IconBox>
+          </Tooltip>
+        </Stack>
+
+      </Flex>
 
       <Flex justifyContent="flex-end" flex={1} mr={5}>
         {body}
