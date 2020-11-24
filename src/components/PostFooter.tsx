@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Flex, Box, Heading } from '@chakra-ui/core'
+import { Flex } from '@chakra-ui/core'
 
 import GiveAward from '../icons/give-award.svg'
 import PostSave from '../icons/post-save.svg'
@@ -12,8 +12,7 @@ import styled from '@emotion/styled'
 // import { useRouter } from 'next/router'
 
 interface PostProps {
-  data: Post;
-  children?: React.ReactDOM
+  data?: Partial<Post>
 }
 
 const PostButton = styled.div`  
@@ -35,10 +34,10 @@ const PostButton = styled.div`
   }
 `
 
-const PostFooter = (props: PostProps) => {
+const PostFooter = ({ data }: PostProps) => {
   const [isSaved, setIsSaved] = useState(Math.round(Math.random()))
-
-  const command = (e: React.SyntheticEvent, cmd: string) => {
+  console.log(data)
+  const command = (_: React.SyntheticEvent, cmd: string) => {
     console.log('command', cmd)
     
     if (cmd === 'bookmark') {
@@ -49,7 +48,7 @@ const PostFooter = (props: PostProps) => {
   }
 
   return (
-    <Flex direction="row" align="center" mt={2}>
+    <Flex direction="row" align="center" mt={2} className="post-footer">
       <PostButton onClick={(e) => command(e, 'give-award')}>
         <GiveAward
           style={{ fill: '#455A64' }}

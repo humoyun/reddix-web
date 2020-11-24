@@ -1,11 +1,11 @@
 import { ChakraProvider, CSSReset } from '@chakra-ui/core'
 
-import theme from '../theme'
-import Layout from '../layouts/Layout'
+import theme from '@/theme'
+import Layout from '@/layouts/Layout'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../utils/createUrqlCLient'
+import { createUrqlClient } from '@/utils/createUrqlClient'
 
-const MyApp = ({ Component, pageProps }: any) => {
+const MyApp = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={theme}>
       {/* <ColorModeProvider> */}

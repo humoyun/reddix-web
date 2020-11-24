@@ -98,15 +98,13 @@ export const PostComponent = ({ post }: PostProps) => {
             onClick={(e) => handleVote(e, 'up')}
             style={{ fill: 'red' }}
             width={15}
-            height={15}
-          ></Upvote>
+            height={15} />
           <Box userSelect="none">{vote}</Box>
           <Downvote
             onClick={(e) => handleVote(e, 'down')}
             style={{ fill: '#455A64' }}
             width={15}
-            height={15}
-          ></Downvote>
+            height={15} />
         </Rightbox>
       </Box>
 
@@ -132,10 +130,10 @@ export const PostComponent = ({ post }: PostProps) => {
           <Box fontSize={14}>{post.text?.slice(0, 100)}</Box>
         </PostContent>
 
-        <PostFooter className="post-footer">
-
-        </PostFooter>
+        <PostFooter data={post} />
       </Flex>
     </Flexbox>
   )
 }
+
+// https://stackoverflow.com/questions/63252161/ts2322-property-children-does-not-exist-on-type-intrinsic-attributes-and-prop

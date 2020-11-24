@@ -1,9 +1,9 @@
 import React from 'react'
-import { Editor, EditorState } from 'draft-js'
-import 'draft-js/dist/Draft.css'
+// import { Editor, EditorState } from 'draft-js'
+// import 'draft-js/dist/Draft.css'
 import { Box } from '@chakra-ui/core'
 
-const TextEditor = ({ }) => {
+const TextEditor: React.FC = () => {
   return (
     <Box>
       

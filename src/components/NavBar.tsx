@@ -1,14 +1,14 @@
 import React from 'react'
-import { Box, Flex, Button, Heading, Stack, Divider, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
-import styled from '@emotion/styled';
+import { Box, Flex, Button, Heading, Stack, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
+import styled from '@emotion/styled'
 import NextLink from 'next/link'
 import { useMeQuery, useLogoutMutation } from '../generated/graphql'
 import { useRouter } from 'next/router'
-import DarkMode from '../icons/sun.svg'
+import DarkMode from '@/icons/sun.svg'
 // import New from '../icons/new.svg'
 // import Rise from '../icons/rise.svg'
-import Rocket from '../icons/rocket.svg'
-import AllPosts from '../icons/all-chart.svg'
+import Rocket from '@/icons/rocket.svg'
+import AllPosts from '@/icons/all-chart.svg'
 
 
 const IconBox = styled.span`
@@ -35,6 +35,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
   const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
   let body = null
+  console.log('fetching : ', fetching)
   console.log('data me : ', data)
 
   const goHome = () => {
@@ -43,19 +44,13 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
 
   if (!data?.me) {
     body = (
-      <div>
+      <Flex minW={100}>
         <NextLink href="/login">
           <Button mr={3} size="sm" variant="outline">
             Login
           </Button>
         </NextLink>
-
-        <NextLink href="/register">
-          <Button mr={8} size="sm">
-            Register
-          </Button>
-        </NextLink>
-      </div>
+      </Flex>
     )
   } else { 
     body = (
@@ -90,7 +85,6 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
     >
       <Flex alignItems="center" flex={1} >
         <Box ml={4} onClick={goHome}>
-          {/* <ReddirLogo width={38} height={38} style={{ fill: 'black',  }} /> */}
           <img src="/reddix.png" style={{ width: 45, height: 45, cursor: 'pointer' }} />
         </Box>
         <Heading ml={2} as="h3" size="md">

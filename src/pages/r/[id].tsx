@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../../utils/createUrqlCLient'
+import { createUrqlClient } from '../../utils/createUrqlClient'
 import { useRouter } from 'next/router'
 
 const SubredditPage: NextPage = ({}) => {

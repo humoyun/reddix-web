@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { withUrqlClient } from 'next-urql'
 import { Flex, Box, Button, Heading } from '@chakra-ui/core'
-import { createUrqlClient } from '../utils/createUrqlCLient'
-import { Post, usePostsQuery } from '../generated/graphql'
-import { PostComponent } from '../components/Post'
-import { PostInput } from '../components/PostInput'
-import Loader from '../components/Loader'
+import { createUrqlClient } from '@/utils/createUrqlClient'
+import { Post, usePostsQuery } from '@/generated/graphql'
+import { PostComponent } from '@/components/Post'
+import { PostInput } from '@/components/PostInput'
+import Loader from '@/components/Loader'
 
 type NS = string | null
 

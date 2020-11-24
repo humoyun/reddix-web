@@ -8,7 +8,9 @@ interface PostProps {
 }
 
 const PostContent = ({ post }: PostProps) => {
-
+  const [dummy, setDummy] = useState('dummy')
+  setDummy('mummy')
+  console.log(dummy)
   return (
     <Flex direction="row" align="center" mt={2}>
       <Heading as="h4" size="sm">

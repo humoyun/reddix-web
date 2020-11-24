@@ -3,14 +3,17 @@ import { Formik, Form } from 'formik'
 import {
   Box,
   Button,
+  Flex,
+  Link,
+  Text
 } from '@chakra-ui/core'
-import { BodyWrapper } from '../components/BodyWrapper'
-import { InputField } from '../components/InputField'
+import { BodyWrapper } from '@/components/BodyWrapper'
+import { InputField } from '@/components/InputField'
 import { useRouter } from 'next/router'
-import { useRegisterMutation } from '../generated/graphql'
-import { toErrorMap } from '../utils/errorMapper'
+import { useRegisterMutation } from '@/generated/graphql'
+import { toErrorMap } from '@/utils/errorMapper'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../utils/createUrqlCLient'
+import { createUrqlClient } from '@/utils/createUrqlClient'
 
 interface registerProps {
   dummy?: string
@@ -37,12 +40,13 @@ const Register: React.FC<registerProps> = ({ }) => {
         {({ isSubmitting }) => (
           <Form>
             <InputField
+              type="text"
               name="username"
               placeholder="username"
               label="Username"
             />
             <Box mt={4}>
-              <InputField name="email" placeholder="email" label="Email" />
+              <InputField type="email" name="email" placeholder="email" label="Email" />
             </Box>
             <Box mt={4}>
               <InputField
@@ -52,14 +56,26 @@ const Register: React.FC<registerProps> = ({ }) => {
                 type="password"
               />
             </Box>
-            <Button
-              mt={4}
-              type="submit"
-              isLoading={isSubmitting}
-              colorScheme="teal"
-            >
-              register
-            </Button>
+
+
+            <Flex alignItems="center" flexDirection="column" my={4}>
+              <Button
+                w="100%"
+                type="submit"
+                isLoading={isSubmitting}
+                colorScheme="teal"
+              >
+                Register
+              </Button>
+  
+              <Text fontSize="md" color="gray.500" mt={4}>
+                Already have account? {'  '}
+                <Link color="teal.900" href="/login">
+                  Login
+                </Link>
+              </Text>
+            </Flex>
+
           </Form>
         )}
       </Formik>

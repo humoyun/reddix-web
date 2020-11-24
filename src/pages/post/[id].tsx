@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../../utils/createUrqlCLient'
+import { createUrqlClient } from '../../utils/createUrqlClient'
 import { useRouter } from 'next/router'
 import { Flex, Heading, Spinner, Tag, Text } from '@chakra-ui/core'
 import { usePostQuery } from '../../generated/graphql'
@@ -9,7 +9,9 @@ import { usePostQuery } from '../../generated/graphql'
 const PostPage: NextPage = ({ }) => {
   const router = useRouter()
 
-  const [{ data, fetching }] = usePostQuery({ variables: { id: router.query.id} })
+  const [{ data, fetching }] = usePostQuery({ 
+    variables: { id: (router.query.id as string) } 
+  })
 
   console.log('data ', data)
   return (

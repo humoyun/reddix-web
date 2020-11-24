@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 
 export const PostInput = (props: any) => {
   const router = useRouter()
-  const handleClick = (e: React.SyntheticEvent, type: string) => {
-    console.log('handleClick', type)
+  const handleClick = (_: React.SyntheticEvent, type: string) => {
+    console.log('handleClick', type, props)
     router.push('/create-post')
   }
 

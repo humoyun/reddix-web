@@ -1,6 +1,6 @@
 import React from 'react'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../utils/createUrqlCLient'
+import { createUrqlClient } from '@/utils/createUrqlClient'
 
 const SearchPage = ({}) => {
   return (

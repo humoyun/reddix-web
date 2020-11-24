@@ -4,8 +4,8 @@ import { withUrqlClient } from 'next-urql'
 import { useRouter } from 'next/router'
 import { Form, Formik } from 'formik'
 
-import { useCreatePostMutation } from '../generated/graphql'
-import { createUrqlClient } from '../utils/createUrqlCLient'
+import { PostType, useCreatePostMutation } from '../generated/graphql'
+import { createUrqlClient } from '../utils/createUrqlClient'
 import { InputField } from '../components/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import { BodyWrapper } from '../components/BodyWrapper'
@@ -20,7 +20,7 @@ const CreatePost: React.FC<any> = ({ }) => {
     <BodyWrapper>
       Create New post
       <Formik
-        initialValues={{ title: '', text: '' }}
+        initialValues={{ title: '', text: '', type: PostType.Txt }}
         onSubmit={async (values) => {
           const { error } = await createPost({ input: values })
 
@@ -31,10 +31,11 @@ const CreatePost: React.FC<any> = ({ }) => {
       >
         {({ isSubmitting }) => (
           <Form>
-            <InputField name="title" placeholder="title" label="Title" />
+            <InputField type="text" name="title" placeholder="title" label="Title" />
             <Box>
               <InputField
                 textarea
+                type="text"
                 name="text"
                 placeholder="text..."
                 label="Body"

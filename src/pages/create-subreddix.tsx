@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, Button } from '@chakra-ui/core'
 import { withUrqlClient } from 'next-urql'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { Form, Formik } from 'formik'
 
 // import { useCreatePostMutation } from '../generated/graphql'
-import { createUrqlClient } from '../utils/createUrqlCLient'
+import { createUrqlClient } from '../utils/createUrqlClient'
 import { InputField } from '../components/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import { BodyWrapper } from '../components/BodyWrapper'
