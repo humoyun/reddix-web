@@ -26,7 +26,7 @@ const CreateSubreddix: React.FC<any> = ({ }) => {
         onSubmit={async (values) => {
           const { data, error } = await createSubreddix({ name })
 
-          console.log(data)
+          console.log(data,values)
           console.log(error)
         }}
       >
