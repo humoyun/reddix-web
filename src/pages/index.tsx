@@ -5,6 +5,7 @@ import { createUrqlClient } from '@/utils/createUrqlClient'
 import { Post, usePostsQuery } from '@/generated/graphql'
 import { PostComponent } from '@/components/Post'
 import { PostInput } from '@/components/PostInput'
+import { PostLoading } from '@/components/PostLoading'
 import Loader from '@/components/Loader'
 
 type NS = string | null
@@ -23,6 +24,7 @@ const Index = () => {
   return (
     <Box>
       <PostInput></PostInput>
+      <PostLoading></PostLoading>
       
       <Box>
       {!data ?

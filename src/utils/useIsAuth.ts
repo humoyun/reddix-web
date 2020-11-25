@@ -8,7 +8,7 @@ export const useIsAuth = () => {
   
   useEffect(() => {
     if (!fetching && !data?.me) {
-      router.replace('/login?next=' + router.pathname)
+      router.replace('/auth/login?next=' + router.pathname)
     }
   }, [fetching, data, router])
 }

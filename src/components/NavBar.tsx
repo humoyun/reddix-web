@@ -45,7 +45,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
   if (!data?.me) {
     body = (
       <Flex minW={100}>
-        <NextLink href="/login">
+        <NextLink href="/auth/login">
           <Button mr={3} size="sm" variant="outline">
             Login
           </Button>

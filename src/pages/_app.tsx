@@ -1,18 +1,35 @@
 import { ChakraProvider, CSSReset } from '@chakra-ui/core'
 
 import theme from '@/theme'
-import Layout from '@/layouts/Layout'
+import AppLayout from '@/layouts/AppLayout'
+import AuthLayout from '@/layouts/AuthLayout'
 import { withUrqlClient } from 'next-urql'
 import { createUrqlClient } from '@/utils/createUrqlClient'
+import { useRouter } from 'next/router'
 
 const MyApp = ({ Component, pageProps }) => {
+
+  const router = useRouter()
+
+
+
   return (
     <ChakraProvider theme={theme}>
       {/* <ColorModeProvider> */}
       <CSSReset />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+
+      {router.pathname.startsWith('/auth/')
+        ? 
+          <AuthLayout>
+            <Component {...pageProps} />
+          </AuthLayout>
+          : 
+          <AppLayout>
+            <Component {...pageProps} />
+          </AppLayout>
+        }
+
+
       {/* </ColorModeProvider> */}
     </ChakraProvider>
   )
