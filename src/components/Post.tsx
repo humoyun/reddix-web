@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Flex, Box, Heading, Avatar, Text } from '@chakra-ui/core'
-import Downvote from '../icons/arrow-down.svg'
-import Upvote from '../icons/arrow-up.svg'
-import Dot from '../icons/dot.svg'
+import Downvote from '@/icons/arrow-down.svg'
+import Upvote from '@/icons/arrow-up.svg'
+import Dot from '@/icons/dot.svg'
 import styled from '@emotion/styled'
 import PostFooter from './PostFooter'
-import { Post } from '../generated/graphql'
+import { Post } from '@/generated/graphql'
 
 interface PostProps {
   post: Partial<Post>;
