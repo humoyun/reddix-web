@@ -4,10 +4,11 @@ import {
   Box,
   Button,
   Flex,
+  Heading,
   Link,
   Text
 } from '@chakra-ui/core'
-import { BodyWrapper } from '@/components/BodyWrapper'
+import ArrowBackIcon from '@/icons/arrow.svg'
 import { InputField } from '@/components/InputField'
 // import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
@@ -28,7 +29,23 @@ const Login: React.FC<loginProps> = ({}) => {
   const router = useRouter()
   
   return (
-    <BodyWrapper variant="small">
+    <Flex flexDirection="column" width={350} bg="#fff" borderRadius={4} padding={4}> 
+      <Flex justifyContent="center" alignItems="center" mb={10}>
+        <Heading as="h2"  fontWeight="normal">
+          Login
+        </Heading>
+      </Flex>
+
+      <Flex position="absolute" top={10} right={20} alignItems="center">
+        <ArrowBackIcon
+          style={{ fill: '#ccc' }}
+          width={14}
+          height={14} />
+        <Link href="/">
+          <Text fontSize="sm" color="gray.500" ml={2}>Go back</Text>
+        </Link>
+      </Flex>
+
       <Formik
         initialValues={{ usernameOrEmail: '', password: '' }}
         onSubmit={async (values, { setErrors }) => {
@@ -60,7 +77,7 @@ const Login: React.FC<loginProps> = ({}) => {
               label="Username Or Email"
               type="text"
             />
-            <Box mt={4}>
+            <Box mt={5}>
               <InputField
                 name="password"
                 placeholder="password"
@@ -69,7 +86,7 @@ const Login: React.FC<loginProps> = ({}) => {
               />
             </Box>
             
-            <Flex alignItems="center" flexDirection="column" my={4}>
+            <Flex alignItems="center" flexDirection="column" mt={8}>
               <Button
                 w="100%"
                 type="submit"
@@ -81,7 +98,7 @@ const Login: React.FC<loginProps> = ({}) => {
   
               <Text fontSize="md" color="gray.500" mt={4}>
                 New to Reddix? {' '}
-                <Link color="teal.900" href="/register">
+                <Link color="teal.900" href="/auth/register">
                   Register
                 </Link>
               </Text>
@@ -90,7 +107,7 @@ const Login: React.FC<loginProps> = ({}) => {
           </Form>
         )}
       </Formik>
-    </BodyWrapper>
+    </Flex>
   )
 }
 

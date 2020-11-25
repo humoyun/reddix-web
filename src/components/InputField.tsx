@@ -32,7 +32,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel htmlFor={field.name}>{label}</FormLabel>
+      {/* <FormLabel htmlFor={field.name}>{label}</FormLabel> */}
       
       {textarea ? 
         (<Textarea {...field} id={field.name} color="#3a3a3a" />) : 
