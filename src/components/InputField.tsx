@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes, useEffect, useState } from 'react'
 import { useField } from 'formik'
 import {
   FormControl,
@@ -25,10 +25,14 @@ export const InputField: React.FC<InputFieldProps> = ({
   ...props
 }) => {
   const [field, { error }] = useField(props)
+  
   // let C = Input
   // if (textarea) {
   //   C = Textarea 
   // }
+  useEffect(() => {
+    console.log('error', error)
+  }, [error])
 
   return (
     <FormControl isInvalid={!!error}>
@@ -36,7 +40,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       
       {textarea ? 
         (<Textarea {...field} id={field.name} color="#3a3a3a" />) : 
-        (<Input {...field} {...props} id={field.name} color="#3a3a3a" />)
+        (<Input {...field} {...props} id={field.name} color="#3a3a3a"  />)
       }
       
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
