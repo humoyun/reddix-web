@@ -5,7 +5,7 @@ import { withUrqlClient } from 'next-urql'
 import { Form, Formik } from 'formik'
 
 // import { useCreatePostMutation } from '../generated/graphql'
-import { createUrqlClient } from '../utils/createUrqlClient'
+import { createUrqlClient } from '@/utils/createUrqlClient'
 import { InputField } from '../components/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import { BodyWrapper } from '../components/BodyWrapper'

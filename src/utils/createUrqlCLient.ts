@@ -1,9 +1,10 @@
 import { dedupExchange, Exchange, fetchExchange } from 'urql'
 import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from '../generated/graphql'
-import { cacheExchange } from '@urql/exchange-graphcache'
+import { cacheExchange, Cache, QueryInput } from '@urql/exchange-graphcache'
 import { devtoolsExchange } from '@urql/devtools'
 import { pipe, tap } from 'wonka'
 import { cursorPagination } from './cursorPagination'
+import Router from 'next/router'
 
 function betterUpdateQuery<Result, Query>(
   cache: Cache,

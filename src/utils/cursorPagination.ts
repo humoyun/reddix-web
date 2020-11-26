@@ -19,7 +19,7 @@ export const cursorPagination = (): Resolver => {
     }
 
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`
-    const key1 = cache.resolveFieldByKey(entityKey, fieldKey)
+    const key1 = cache.resolveFieldByKey(entityKey, fieldKey) as string
     const isItInCache = cache.resolve(key1, 'posts')
     
     /**
@@ -34,10 +34,10 @@ export const cursorPagination = (): Resolver => {
     let hasMore = true
 
     fieldInfos.forEach(fin => { 
-      const key = cache.resolveFieldByKey(entityKey, fin.fieldKey) as string[]
+      const key = cache.resolveFieldByKey(entityKey, fin.fieldKey) as string
       
-      const data = cache.resolve(key, 'posts')
-      const _hasMore = cache.resolve(key, 'hasMore')
+      const data = cache.resolve(key, 'posts') as string[]
+      const _hasMore = cache.resolve(key, 'hasMore') as boolean
       if(!_hasMore) hasMore = _hasMore
 
       results.push(...data) 

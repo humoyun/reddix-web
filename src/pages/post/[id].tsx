@@ -1,7 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { withUrqlClient } from 'next-urql'
-import { createUrqlClient } from '../../utils/createUrqlClient'
+import { createUrqlClient } from '@/utils/createUrqlClient'
 import { useRouter } from 'next/router'
 import { Flex, Heading, Spinner, Tag, Text } from '@chakra-ui/core'
 import { usePostQuery } from '../../generated/graphql'
