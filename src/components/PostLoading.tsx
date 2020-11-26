@@ -3,7 +3,7 @@ import React from 'react'
 
 export function PostLoading() {
   return (
-  <Box padding="3" boxShadow="lg" bg="white">
+    <Box padding="3" boxShadow="lg" bg="white" my={4}>
     <Flex flexDirection="row" alignItems="center">
       <Box width={50}>
         <SkeletonCircle size="5" />

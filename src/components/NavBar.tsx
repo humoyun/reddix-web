@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Box, Flex, Button, Heading, Stack, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
 import styled from '@emotion/styled'
 import NextLink from 'next/link'
-import { useMeQuery, useLogoutMutation } from '../generated/graphql'
+import { useLogoutMutation } from '../generated/graphql'
 import { useRouter } from 'next/router'
 import DarkMode from '@/icons/sun.svg'
 // import New from '../icons/new.svg'
 // import Rise from '../icons/rise.svg'
 import Rocket from '@/icons/rocket.svg'
 import AllPosts from '@/icons/all-chart.svg'
-
+import UserContext from '@/utils/userContext'
 
 const IconBox = styled.span`
   display: inline-flex;
@@ -28,37 +28,39 @@ export interface NavBarProps {
   dummy?: string
 } 
 
-export const NavBar: React.FC<NavBarProps> = ({ }) => {
-  const [{ data, fetching }] = useMeQuery({
-    pause: typeof window === 'undefined' || typeof window === undefined
-  })
+export const Navbar: React.FC<NavBarProps> = ({ }) => {
+  const {user, fetching} = useContext(UserContext)
+
   const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
-  let body = null
-  console.log('fetching : ', fetching)
-  console.log('data me : ', data)
+  let securePart = null
+
+  console.log(' user :; :: ', user)
+  console.log(' fetching :; :: ', fetching)
 
   const goHome = () => {
     router.push('/')
   }
 
-  if (!data?.me) {
-    body = (
+  if (!user?.me) {
+    securePart = (
       <Flex minW={100}>
         <NextLink href="/auth/login">
-          <Button mr={3} size="sm" variant="outline">
+          <Button
+            isLoading={fetching}
+            mr={3} size="xs" variant="outline">
             Login
           </Button>
         </NextLink>
       </Flex>
     )
   } else { 
-    body = (
+    securePart = (
       <Flex alignItems="center">
         <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
           <AvatarBadge  boxSize="1.25em" bg="green.500" />
         </Avatar>
-        <Box mr={5} px={2}>{data.me.username}</Box>
+        <Box mr={5} px={2}>{user.username}</Box>
         <Button
           size="xs"
           isLoading={logoutFetching}
@@ -132,7 +134,7 @@ export const NavBar: React.FC<NavBarProps> = ({ }) => {
       </Flex>
 
       <Flex justifyContent="flex-end" flex={1} mr={5}>
-        {body}
+        { securePart }
       </Flex>
     </Flex>
   )

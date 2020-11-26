@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Flex,
+  Center,
   Heading,
   Link,
   Text
@@ -29,9 +30,15 @@ const Login: React.FC<loginProps> = ({}) => {
   const router = useRouter()
   
   return (
-    <Flex flexDirection="column" width={350} bg="#fff" borderRadius={4} padding={4}> 
-      <Flex justifyContent="center" alignItems="center" mb={10}>
-        <Heading as="h2"  fontWeight="normal">
+    <Flex flexDirection="column" width={350} bg="#fff" borderRadius={4} padding={4}>
+
+      <Center mb={4}>
+        <img src="/reddix-logo.png" style={{ width: 75, height: 75, cursor: 'pointer' }} />
+      </Center>
+
+
+      <Flex justifyContent="center" alignItems="center" mb={6}>
+        <Heading as="h2" size="lg">
           Login
         </Heading>
       </Flex>
@@ -96,7 +103,7 @@ const Login: React.FC<loginProps> = ({}) => {
                 Login
               </Button>
   
-              <Text fontSize="md" color="gray.500" mt={4}>
+              <Text fontSize="sm" color="gray.500" mt={4}>
                 New to Reddix? {' '}
                 <Link color="teal.900" href="/auth/register">
                   Register

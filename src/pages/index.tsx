@@ -15,7 +15,7 @@ const Index = () => {
   const [{ data, fetching }] = usePostsQuery({ variables })
 
   const loadMore = () => {
-    console.log('*** loadMore ***')
+    
     const len =  data.posts.posts.length - 1
     const cursor: NS = data.posts.posts[len].createdAt
     setVariables({ limit: variables.limit, cursor })
@@ -24,7 +24,8 @@ const Index = () => {
   return (
     <Box>
       <PostInput></PostInput>
-      <PostLoading></PostLoading>
+      {fetching && [1, 2, 3, 4, 5].map(num => <PostLoading key={num}></PostLoading>)}
+      
       
       <Box>
       {!data ?
@@ -58,6 +59,7 @@ const Index = () => {
     </Box>
   )
 }
+
 
 /**
  *  Unless the component that is being wrapped already has a `getInitialProps` method, 
