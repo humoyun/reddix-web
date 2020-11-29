@@ -14,8 +14,8 @@ export const BodyWrapper: React.FC<WrapperProps> = ({
       mt={5}
       p={3}
       mx="auto"
-      maxW={variant === 'regular' ? '800px' : '400px'}
-      w="70%"
+      maxW={variant === 'regular' ? '800px' : '500px'}
+      w="80%"
       h="100%-50px"
     >
       {children}

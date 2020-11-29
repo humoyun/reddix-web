@@ -3,7 +3,7 @@ import { Center } from '@chakra-ui/core'
 
 interface LayoutProps { 
   variant?: 'small' | 'regular';
-  children?: React.ReactChildren 
+  children?: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children })=> {

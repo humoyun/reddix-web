@@ -29,7 +29,7 @@ export interface NavBarProps {
 } 
 
 export const Navbar: React.FC<NavBarProps> = ({ }) => {
-  const {user, fetching} = useContext(UserContext)
+  const {user, fetching}: any = useContext(UserContext)
 
   const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
           <AvatarBadge  boxSize="1.25em" bg="green.500" />
         </Avatar>
-        <Box mr={5} px={2}>{user.username}</Box>
+        <Box mr={5} px={2}>{user.me.username}</Box>
         <Button
           size="xs"
           isLoading={logoutFetching}
@@ -85,12 +85,12 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
       position="sticky"
       top={0}
     >
-      <Flex alignItems="center" flex={1} >
+      <Flex alignItems="center" flex={1}>
         <Box ml={4} onClick={goHome}>
-          <img src="/reddix.png" style={{ width: 45, height: 45, cursor: 'pointer' }} />
+          <img src="/reddix-logo.png" style={{ width: 38, height: 38, cursor: 'pointer' }} />
         </Box>
-        <Heading ml={2} as="h3" size="md">
-          Cactus
+        <Heading ml={2} as="h3" size="md" color="#09a7a7">
+          Reddix
         </Heading>
       </Flex>
 
