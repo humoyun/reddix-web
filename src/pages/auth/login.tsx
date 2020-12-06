@@ -10,7 +10,7 @@ import {
   Text
 } from '@chakra-ui/core'
 import ArrowBackIcon from '@/icons/arrow.svg'
-import { InputField } from '@/components/InputField'
+import { InputField } from '@/components/common/InputField'
 // import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
 import { useLoginMutation } from '@/generated/graphql'

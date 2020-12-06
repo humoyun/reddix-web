@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik'
 
 import { PostType, useCreatePostMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
-import { InputField } from '../components/InputField'
+import { InputField } from '../components/common/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import PostTabs from '../components/create-post/PostTabs'
 
@@ -27,9 +27,13 @@ export const subreddixOptions = [
     img: '#',
     members: 69
   },
-  { value: 'id-of-subreddix-4', img: '#', label: 'r/salamandor', members: 3 },
+  { value: 'id-of-subreddix-4', img: '#', label: 'r/salamandor', members: 2 },
+  { value: 'id-of-subreddix-5', img: '#', label: 'r/askme', members: 12 },
+  { value: 'id-of-subreddix-6', img: '#', label: 'r/VueJS', members: 30 },
+  { value: 'id-of-subreddix-7', img: '#', label: 'r/politics', members: 1008 },
+  { value: 'id-of-subreddix-8', img: '#', label: 'r/BreakingNews', members: 419 },
   {
-    value: 'id-of-subreddix-5',
+    value: 'id-of-subreddix-9',
     img: '#',
     label: 'r/GetMotivated',
     members: 529

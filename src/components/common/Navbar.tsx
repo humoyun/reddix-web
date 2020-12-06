@@ -1,15 +1,26 @@
 import React, { useContext } from 'react'
-import { Box, Flex, Button, Heading, Stack, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
+import { 
+  Box, 
+  Flex, 
+  Button, 
+  Heading, 
+  Stack, 
+  Tooltip, 
+  AvatarBadge, 
+  Avatar, 
+  Link
+} from '@chakra-ui/core'
+import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import NextLink from 'next/link'
-import { useLogoutMutation } from '../generated/graphql'
-import { useRouter } from 'next/router'
+
 import DarkMode from '@/icons/sun.svg'
-// import New from '../icons/new.svg'
-// import Rise from '../icons/rise.svg'
 import Rocket from '@/icons/rocket.svg'
 import AllPosts from '@/icons/all-chart.svg'
+// import New from '../icons/new.svg'
+// import Rise from '../icons/rise.svg'
 import UserContext from '@/utils/userContext'
+import { useLogoutMutation } from '../../generated/graphql'
 
 const IconBox = styled.span`
   display: inline-flex;
@@ -49,7 +60,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
           <Button
             isLoading={fetching}
             mr={3} size="xs" variant="outline">
-            Login
+            login
           </Button>
         </NextLink>
       </Flex>
@@ -78,8 +89,6 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
       alignItems="center"
       h={50}
       bg="#fff"
-      borderBottom="1px"
-      borderBottomColor="#ccc"
       p={2}
       zIndex={1}
       position="sticky"
@@ -98,6 +107,14 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         {/* Search component TO-DO */}
 
       </Box>
+
+      <Flex minW={100}>
+        <NextLink href="/create-post">
+          <Button mr={3} size="sm" colorScheme="teal" variant="outline">
+            create post
+          </Button>
+        </NextLink>
+      </Flex>
 
       <Flex flex={1} justifyContent="center">
 

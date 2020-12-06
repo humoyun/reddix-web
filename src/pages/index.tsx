@@ -3,9 +3,9 @@ import { withUrqlClient } from 'next-urql'
 import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '@/utils/createUrqlClient'
 import { Post, usePostsQuery } from '@/generated/graphql'
-import { PostComponent } from '@/components/Post'
-import { PostInput } from '@/components/PostInput'
-import { PostLoading } from '@/components/PostLoading'
+import { PostComponent } from '@/components/post/Post'
+import { PostInput } from '@/components/post/PostInput'
+import { PostLoading } from '@/components/post/PostLoading'
 import Loader from '@/components/Loader'
 
 type NS = string | null

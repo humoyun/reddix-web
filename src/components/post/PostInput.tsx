@@ -1,7 +1,7 @@
 import React from 'react'
 import { Flex, Box, Input, Avatar } from '@chakra-ui/core'
-import LinkIcon from '../icons/link.svg'
-import MediaIcon from '../icons/media.svg'
+import LinkIcon from '@/icons/link.svg'
+import MediaIcon from '@/icons/media.svg'
 import { useRouter } from 'next/router'
 
 export const PostInput = (props: any) => {

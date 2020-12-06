@@ -97,14 +97,14 @@ export const PostComponent = ({ post }: PostProps) => {
           <Upvote
             onClick={(e) => handleVote(e, 'up')}
             style={{ fill: 'red' }}
-            width={15}
-            height={15} />
+            width={18}
+            height={18} />
           <Box userSelect="none">{vote}</Box>
           <Downvote
             onClick={(e) => handleVote(e, 'down')}
             style={{ fill: '#455A64' }}
-            width={15}
-            height={15} />
+            width={18}
+            height={18} />
         </Rightbox>
       </Box>
 

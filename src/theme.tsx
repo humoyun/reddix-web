@@ -7,7 +7,15 @@ import { theme as chakraTheme } from '@chakra-ui/core'
 
 const fonts = { ...chakraTheme.fonts, mono: '\'Menlo\', monospace' }
 
-const breakpoints = ['40em', '52em', '64em']
+// define your custom breakpoints
+const breakpoints = ['576px', '768px', '992px', '1200px']
+
+// add an alias for object responsive prop
+breakpoints.sm = breakpoints[0]
+breakpoints.md = breakpoints[1]
+breakpoints.md = breakpoints[2]
+breakpoints.md = breakpoints[3]
+
 
 // const styles: Styles = {
 //   ...theme.styles,
