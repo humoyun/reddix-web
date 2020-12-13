@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
       position="sticky"
       top={0}
     >
-      <Flex alignItems="center" flex={1}>
+      <Flex alignItems="center" flex={1} minW={150}>
         <Box ml={4} onClick={goHome}>
           <img src="/reddix-logo.png" style={{ width: 38, height: 38, cursor: 'pointer' }} />
         </Box>

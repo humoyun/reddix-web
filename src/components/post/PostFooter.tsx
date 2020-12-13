@@ -36,7 +36,7 @@ const PostButton = styled.div`
 
 const PostFooter = ({ data }: PostProps) => {
   const [isSaved, setIsSaved] = useState(Math.round(Math.random()))
-  console.log(data)
+  
   const command = (_: React.SyntheticEvent, cmd: string) => {
     console.log('command', cmd)
     

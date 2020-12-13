@@ -3,18 +3,19 @@ import { MeDocument, LoginMutation, MeQuery, LogoutMutation } from '../generated
 import { cacheExchange, Cache, QueryInput } from '@urql/exchange-graphcache'
 import { devtoolsExchange } from '@urql/devtools'
 import { pipe, tap } from 'wonka'
-import { cursorPagination } from './cursorPagination'
 import Router from 'next/router'
+import gql from 'graphql-tag'
+import { cursorPagination } from './cursorPagination'
 
 const isServer = () => typeof window === 'undefined' || typeof window === undefined
 
 function betterUpdateQuery<Result, Query>(
   cache: Cache,
-  qi: QueryInput,
+  queryInput: QueryInput,
   result: any,
-  fn: (r: Result, q: Query) => Query
+  handler: (res: Result, query: Query) => Query
 ) {
-  return cache.updateQuery(qi, (data) => fn(result, data as any) as any)
+  return cache.updateQuery(queryInput, (data) => handler(result, data as any) as any)
 }
 
 
@@ -71,6 +72,32 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         // **  
         updates: {
           Mutation: {
+            vote: (_result, args, cache, _) => {
+              const { postId, val } = args as { postId: string, val: number }
+              const fq = gql`
+                fragment _ on Post {
+                  id
+                  points
+                  voteStatus
+                } 
+              `
+              const data = cache.readFragment(fq, { id: postId } as any)
+              
+              if (data) {
+                if (data.voteStatus === val) {
+                  return
+                }
+                const newPoints = (data.points as number) + val
+                const fm = gql`
+                  fragment _ on Post {
+                    points
+                    voteStatus
+                  }
+                `
+                cache.writeFragment(fm, { id: postId, points: newPoints, voteStatus: val })
+              }
+            },
+
             /**
              * when we create new post we need to show it at the top of the feed
              * so invalidating first pagination results

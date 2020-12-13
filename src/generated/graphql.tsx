@@ -102,6 +102,7 @@ export type Post = {
   type: Scalars['String'];
   mediaUrl?: Maybe<Scalars['String']>;
   linkPreview?: Maybe<Scalars['String']>;
+  voteStatus?: Maybe<Scalars['Int']>;
   points: Scalars['Float'];
   ownerId: Scalars['String'];
   owner: User;
@@ -172,7 +173,7 @@ export type MutationUpdatePostArgs = {
 
 
 export type MutationDeletePostArgs = {
-  id: Scalars['Float'];
+  id: Scalars['String'];
 };
 
 
@@ -225,6 +226,11 @@ export type VoteResponse = {
   errors?: Maybe<Array<FieldError>>;
   success?: Maybe<Scalars['Boolean']>;
 };
+
+export type PostFragmentFragment = (
+  { __typename?: 'Post' }
+  & Pick<Post, 'id' | 'title' | 'type' | 'text' | 'points' | 'flair' | 'voteStatus' | 'createdAt'>
+);
 
 export type RegularErrorFragment = (
   { __typename?: 'FieldError' }
@@ -424,7 +430,7 @@ export type PostQuery = (
   { __typename?: 'Query' }
   & { post?: Maybe<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'title' | 'type' | 'text' | 'html' | 'points' | 'flair' | 'mediaUrl' | 'linkPreview' | 'createdAt' | 'updatedAt'>
+    & Pick<Post, 'id' | 'title' | 'type' | 'text' | 'html' | 'points' | 'flair' | 'mediaUrl' | 'linkPreview' | 'voteStatus' | 'createdAt' | 'updatedAt'>
     & { owner: (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'username'>
@@ -445,22 +451,33 @@ export type PostsQuery = (
     & Pick<PaginatedPosts, 'hasMore'>
     & { posts: Array<(
       { __typename?: 'Post' }
-      & Pick<Post, 'id' | 'title' | 'text' | 'type' | 'flair' | 'points' | 'createdAt'>
       & { owner: (
         { __typename?: 'User' }
         & Pick<User, 'id' | 'username'>
       ) }
+      & PostFragmentFragment
     )> }
   ) }
 );
 
+export const PostFragmentFragmentDoc = gql`
+    fragment PostFragment on Post {
+  id
+  title
+  type
+  text
+  points
+  flair
+  voteStatus
+  createdAt
+}
+    `;
 export const RegularErrorFragmentDoc = gql`
     fragment RegularError on FieldError {
   field
   message
 }
-`
-
+    `;
 export const RegularUserFragmentDoc = gql`
     fragment RegularUser on User {
   id
@@ -560,18 +577,16 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-}
-
+};
 export const LogoutDocument = gql`
     mutation Logout {
   logout
 }
-`
+    `;
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
-}
-
+};
 export const RegisterDocument = gql`
     mutation Register($options: UserInput!) {
   register(args: $options) {
@@ -615,11 +630,12 @@ export const VoteDocument = gql`
     success
   }
 }
-    `;
+`
 
 export function useVoteMutation() {
-  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
-};
+  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument)
+}
+
 export const CheckTokenDocument = gql`
     query CheckToken($token: String!) {
   checkToken(token: $token) {
@@ -630,11 +646,12 @@ export const CheckTokenDocument = gql`
     success
   }
 }
-    `;
+`
 
 export function useCheckTokenQuery(options: Omit<Urql.UseQueryArgs<CheckTokenQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CheckTokenQuery>({ query: CheckTokenDocument, ...options });
-};
+}
+
 export const MeDocument = gql`
     query Me {
   me {
@@ -658,6 +675,7 @@ export const PostDocument = gql`
     flair
     mediaUrl
     linkPreview
+    voteStatus
     owner {
       id
       username
@@ -676,13 +694,7 @@ export const PostsDocument = gql`
   posts(limit: $limit, cursor: $cursor) {
     hasMore
     posts {
-      id
-      title
-      text
-      type
-      flair
-      points
-      createdAt
+      ...PostFragment
       owner {
         id
         username
@@ -690,7 +702,7 @@ export const PostsDocument = gql`
     }
   }
 }
-    `;
+    ${PostFragmentFragmentDoc}`;
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
