@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React from 'react'
 import { withUrqlClient } from 'next-urql'
 import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '@/utils/createUrqlClient'
@@ -11,8 +11,13 @@ import Loader from '@/components/Loader'
 type NS = string | null
 
 const Index = () => { 
-  const [variables, setVariables] = useState({ limit: 5, cursor: null })
+  const [hasMounted, setHasMounted] = React.useState(false);
+  const [variables, setVariables] = React.useState({ limit: 5, cursor: null })
   const [{ data, fetching }] = usePostsQuery({ variables })
+
+  React.useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   const loadMore = () => {
     const len =  data.posts.posts.length - 1
@@ -23,26 +28,36 @@ const Index = () => {
   return (
     <Box>
       <PostInput></PostInput>
-
-      {fetching && [1, 2, 3, 4, 5].map(num => <PostLoading key={num}></PostLoading>)}
       
-      <Box>
-      {!data ?
-          <Flex w="100%" h={200} justify="center" align="center">
-            <Heading size="md">Loading...</Heading>
-            <Loader></Loader>
-          </Flex> :
-          (
-            <Box>
+      <Loader></Loader>
+      {hasMounted && fetching 
+        ?
+        (
+          [1, 2, 3, 4, 5].map(num => <PostLoading key={num}></PostLoading>)
+        )
+          :
+        (
+          <Box>
             {
-              data.posts.posts.map((post: Post) => (
+              data?.posts?.posts?.map((post: Post) => (
                 <PostComponent key={post.id} post={post} />
               ))
             }
-            </Box>
+          </Box>
+        )
+      }
+      
+      {/* <Box>
+      {(hasMounted && data) ?
+          <Flex w="100%" h={200} justify="center" align="center">
+            <Heading size="md">Loading...</Heading>
+
+          </Flex> :
+          (
+
           )
         }
-      </Box>
+      </Box> */}
 
       <Flex className='load-more-btn'>
         {/* This div className is also the same as Flex className inside loop */}

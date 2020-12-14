@@ -22,6 +22,11 @@ interface loginProps {
   no?: any
 }
 
+/**
+ * use custom mini formik library:
+ * TODO: https://codesandbox.io/s/tiny-formik-using-hooks-qbpdg?file=/src/hooks/useMyFormik.jsx
+ */
+
 // I should use this for form box
 // background: linear-gradient(to bottom,#fff 0,#f7f9f9 45%); for back-color  
 // box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);

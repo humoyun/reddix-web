@@ -122,7 +122,7 @@ const CreatePost: React.FC<any> = ({ }) => {
         </Flex>
       </Flex>
 
-      <div style={{ width: '100%', border: '1px solid #eee', margin: '10px 0;' }}></div>
+      <div style={{ width: '100%', border: '1px solid #eee', margin: '10px 0' }}></div>
 
       <Box my={2} width={[
         '100%', // base

@@ -1,4 +1,5 @@
-import { theme as chakraTheme } from '@chakra-ui/core'
+import { extendTheme, theme as chakraTheme } from '@chakra-ui/core'
+
 // import { mode, Styles } from '@chakra-ui/theme-tools'
 // import theme from '@chakra-ui/theme'
 
@@ -28,7 +29,7 @@ breakpoints.md = breakpoints[3]
 //   })
 // }
 
-const Theme = {
+const theme = {
   ...chakraTheme,
   colors: {
     ...chakraTheme.colors,
@@ -59,5 +60,12 @@ const Theme = {
   },
   // styles
 }
+
+const Theme = extendTheme({
+  ...theme,
+  components: {
+  },
+})
+
 
 export default Theme

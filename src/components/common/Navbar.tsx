@@ -55,7 +55,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
 
   if (!user?.me) {
     securePart = (
-      <Flex minW={100}>
+      <Flex alignItems="center" minW={100}>
         <NextLink href="/auth/login">
           <Button
             isLoading={fetching}
@@ -149,10 +149,11 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         </Stack>
 
       </Flex>
+      {/* TODO: take a look at: https://www.joshwcomeau.com/react/the-perils-of-rehydration */}
 
-      <Flex justifyContent="flex-end" flex={1} mr={5}>
+      {/* <Flex justifyContent="flex-end" flex={1} mr={5}>
         { securePart }
-      </Flex>
+      </Flex> */}
     </Flex>
   )
 }
