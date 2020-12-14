@@ -1,6 +1,6 @@
 import React from 'react'
-import { Navbar } from '@/components/Navbar'
-import { BodyWrapper } from '../components/BodyWrapper'
+import { Navbar } from '@/components/common/Navbar'
+import { BodyWrapper } from '../components/common/BodyWrapper'
 import { Box } from '@chakra-ui/core'
 
 interface LayoutProps { 

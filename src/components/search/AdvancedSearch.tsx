@@ -2,7 +2,7 @@ import React from 'react'
 import { Box,  Flex, InputGroup, InputLeftElement, Input, InputRightElement, TagLabel, TagCloseButton, Tag } from '@chakra-ui/core'
 // import NextLink from 'next/link'
 // import { useMeQuery, useLogoutMutation } from '../generated/graphql'
-import SearchIcon from '../icons/search.svg'
+import SearchIcon from '@/icons/search.svg'
 // import { useRouter } from 'next/router'
 
 export interface SearchProps {

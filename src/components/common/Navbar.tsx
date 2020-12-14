@@ -1,15 +1,26 @@
 import React, { useContext } from 'react'
-import { Box, Flex, Button, Heading, Stack, Tooltip, AvatarBadge, Avatar } from '@chakra-ui/core'
+import { 
+  Box, 
+  Flex, 
+  Button, 
+  Heading, 
+  Stack, 
+  Tooltip, 
+  AvatarBadge, 
+  Avatar, 
+  Link
+} from '@chakra-ui/core'
+import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import NextLink from 'next/link'
-import { useLogoutMutation } from '../generated/graphql'
-import { useRouter } from 'next/router'
+
 import DarkMode from '@/icons/sun.svg'
-// import New from '../icons/new.svg'
-// import Rise from '../icons/rise.svg'
 import Rocket from '@/icons/rocket.svg'
 import AllPosts from '@/icons/all-chart.svg'
+// import New from '../icons/new.svg'
+// import Rise from '../icons/rise.svg'
 import UserContext from '@/utils/userContext'
+import { useLogoutMutation } from '../../generated/graphql'
 
 const IconBox = styled.span`
   display: inline-flex;
@@ -29,7 +40,7 @@ export interface NavBarProps {
 } 
 
 export const Navbar: React.FC<NavBarProps> = ({ }) => {
-  const {user, fetching} = useContext(UserContext)
+  const {user, fetching}: any = useContext(UserContext)
 
   const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
@@ -49,7 +60,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
           <Button
             isLoading={fetching}
             mr={3} size="xs" variant="outline">
-            Login
+            login
           </Button>
         </NextLink>
       </Flex>
@@ -60,7 +71,7 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
           <AvatarBadge  boxSize="1.25em" bg="green.500" />
         </Avatar>
-        <Box mr={5} px={2}>{user.username}</Box>
+        <Box mr={5} px={2}>{user.me.username}</Box>
         <Button
           size="xs"
           isLoading={logoutFetching}
@@ -78,19 +89,17 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
       alignItems="center"
       h={50}
       bg="#fff"
-      borderBottom="1px"
-      borderBottomColor="#ccc"
       p={2}
       zIndex={1}
       position="sticky"
       top={0}
     >
-      <Flex alignItems="center" flex={1} >
+      <Flex alignItems="center" flex={1} minW={150}>
         <Box ml={4} onClick={goHome}>
-          <img src="/reddix.png" style={{ width: 45, height: 45, cursor: 'pointer' }} />
+          <img src="/reddix-logo.png" style={{ width: 38, height: 38, cursor: 'pointer' }} />
         </Box>
-        <Heading ml={2} as="h3" size="md">
-          Cactus
+        <Heading ml={2} as="h3" size="md" color="#09a7a7">
+          Reddix
         </Heading>
       </Flex>
 
@@ -98,6 +107,14 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         {/* Search component TO-DO */}
 
       </Box>
+
+      <Flex minW={100}>
+        <NextLink href="/create-post">
+          <Button mr={3} size="sm" colorScheme="teal" variant="outline">
+            create post
+          </Button>
+        </NextLink>
+      </Flex>
 
       <Flex flex={1} justifyContent="center">
 

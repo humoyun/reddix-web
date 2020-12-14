@@ -9,6 +9,7 @@ query Post($id: String!) {
     flair
     mediaUrl
     linkPreview
+    voteStatus
     owner {
       id
       username

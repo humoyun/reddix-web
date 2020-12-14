@@ -1,15 +1,15 @@
-import React, { InputHTMLAttributes, useEffect, useState } from 'react'
+import React, { InputHTMLAttributes, useEffect } from 'react'
 import { useField } from 'formik'
 import {
   FormControl,
-  FormLabel,
+  // FormLabel,
   Input,
   FormErrorMessage,
   Textarea,
 } from '@chakra-ui/core'
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
-  label: string;
+  label?: string;
   textarea?: boolean;
   name: string;
   type: string;
@@ -40,7 +40,7 @@ export const InputField: React.FC<InputFieldProps> = ({
       
       {textarea ? 
         (<Textarea {...field} id={field.name} color="#3a3a3a" />) : 
-        (<Input {...field} {...props} id={field.name} color="#3a3a3a"  />)
+        (<Input {...field} {...props} id={field.name} focusBorderColor="teal.500" />)
       }
       
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}

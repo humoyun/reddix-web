@@ -1,0 +1,10 @@
+fragment PostFragment on Post {
+  id
+  title
+  type
+  text
+  points
+  flair
+  voteStatus
+  createdAt
+}

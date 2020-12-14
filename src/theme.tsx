@@ -1,11 +1,32 @@
 import { theme as chakraTheme } from '@chakra-ui/core'
+// import { mode, Styles } from '@chakra-ui/theme-tools'
+// import theme from '@chakra-ui/theme'
 
 // good example of styles
 // https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_variables.scss
 
 const fonts = { ...chakraTheme.fonts, mono: '\'Menlo\', monospace' }
 
-const breakpoints = ['40em', '52em', '64em']
+// define your custom breakpoints
+const breakpoints = ['576px', '768px', '992px', '1200px']
+
+// add an alias for object responsive prop
+breakpoints.sm = breakpoints[0]
+breakpoints.md = breakpoints[1]
+breakpoints.md = breakpoints[2]
+breakpoints.md = breakpoints[3]
+
+
+// const styles: Styles = {
+//   ...theme.styles,
+//   global: (props) => ({
+//     ...theme.styles.global,
+//     fontFamily: 'body',
+//     fontWeight: 'light',
+//     color: mode('gray.100', 'whiteAlpha.900')(props),
+//     bg: mode('gray.700', 'gray.900')(props)
+//   })
+// }
 
 const Theme = {
   ...chakraTheme,
@@ -14,9 +35,9 @@ const Theme = {
     black: '#16161D',
   },
   fonts,
-  breakpoints,
+  // breakpoints,
   icons: {
-    ...chakraTheme.icons,
+    // ...chakraTheme.icons,
     logo: {
       path: (
         <svg
@@ -36,6 +57,7 @@ const Theme = {
       viewBox: '0 0 3000 3163',
     },
   },
+  // styles
 }
 
 export default Theme

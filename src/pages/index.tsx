@@ -3,9 +3,9 @@ import { withUrqlClient } from 'next-urql'
 import { Flex, Box, Button, Heading } from '@chakra-ui/core'
 import { createUrqlClient } from '@/utils/createUrqlClient'
 import { Post, usePostsQuery } from '@/generated/graphql'
-import { PostComponent } from '@/components/Post'
-import { PostInput } from '@/components/PostInput'
-import { PostLoading } from '@/components/PostLoading'
+import { PostComponent } from '@/components/post/Post'
+import { PostInput } from '@/components/post/PostInput'
+import { PostLoading } from '@/components/post/PostLoading'
 import Loader from '@/components/Loader'
 
 type NS = string | null
@@ -15,7 +15,6 @@ const Index = () => {
   const [{ data, fetching }] = usePostsQuery({ variables })
 
   const loadMore = () => {
-    
     const len =  data.posts.posts.length - 1
     const cursor: NS = data.posts.posts[len].createdAt
     setVariables({ limit: variables.limit, cursor })
@@ -24,8 +23,8 @@ const Index = () => {
   return (
     <Box>
       <PostInput></PostInput>
+
       {fetching && [1, 2, 3, 4, 5].map(num => <PostLoading key={num}></PostLoading>)}
-      
       
       <Box>
       {!data ?
@@ -33,13 +32,14 @@ const Index = () => {
             <Heading size="md">Loading...</Heading>
             <Loader></Loader>
           </Flex> :
-          (<Box>
+          (
+            <Box>
             {
               data.posts.posts.map((post: Post) => (
                 <PostComponent key={post.id} post={post} />
               ))
             }
-          </Box>
+            </Box>
           )
         }
       </Box>

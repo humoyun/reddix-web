@@ -10,7 +10,7 @@ import {
   Text
 } from '@chakra-ui/core'
 import ArrowBackIcon from '@/icons/arrow.svg'
-import { InputField } from '@/components/InputField'
+import { InputField } from '@/components/common/InputField'
 // import { useMutation } from 'urql'
 import { useRouter } from 'next/router'
 import { useLoginMutation } from '@/generated/graphql'
@@ -31,11 +31,9 @@ const Login: React.FC<loginProps> = ({}) => {
   
   return (
     <Flex flexDirection="column" width={350} bg="#fff" borderRadius={4} padding={4}>
-
       <Center mb={4}>
         <img src="/reddix-logo.png" style={{ width: 75, height: 75, cursor: 'pointer' }} />
       </Center>
-
 
       <Flex justifyContent="center" alignItems="center" mb={6}>
         <Heading as="h2" size="lg">
@@ -58,7 +56,7 @@ const Login: React.FC<loginProps> = ({}) => {
         onSubmit={async (values, { setErrors }) => {
           try {
             const resp = await login(values)  
-
+            console.log('resp ', resp)
             if (resp.data?.login.errors) {
               setErrors(toErrorMap(resp.data?.login.errors))
             } else if (resp.data?.login.user) {

@@ -2,13 +2,7 @@ query Posts($limit: Int!, $cursor: String) {
   posts(limit: $limit, cursor: $cursor) {
     hasMore
     posts {
-      id
-      title
-      text
-      type
-      flair
-      points
-      createdAt
+      ...PostFragment
       owner {
         id
         username

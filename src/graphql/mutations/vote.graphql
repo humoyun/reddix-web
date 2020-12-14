@@ -1,0 +1,9 @@
+mutation VOTE($postId: String!, $val: Int!) {
+  vote(postId: $postId, val: $val) {
+    errors {
+      field
+      message
+    }
+    success
+  }
+}

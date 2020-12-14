@@ -5,10 +5,10 @@ import { withUrqlClient } from 'next-urql'
 import { Form, Formik } from 'formik'
 
 // import { useCreatePostMutation } from '../generated/graphql'
-import { createUrqlClient } from '../utils/createUrqlClient'
-import { InputField } from '../components/InputField'
+import { createUrqlClient } from '@/utils/createUrqlClient'
+import { InputField } from '../components/common/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
-import { BodyWrapper } from '../components/BodyWrapper'
+import { BodyWrapper } from '../components/common/BodyWrapper'
 import { useCreateSubreddixMutation } from '../generated/graphql'
 
 

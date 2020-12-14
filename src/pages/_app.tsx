@@ -8,9 +8,10 @@ import { createUrqlClient } from '@/utils/createUrqlClient'
 import { useRouter } from 'next/router'
 
 import UserContext from '@/utils/userContext'
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { useMeQuery } from '@/generated/graphql'
 
+const isServer = () => typeof window === 'undefined' || typeof window === undefined
 
 /**
  * 
@@ -22,17 +23,11 @@ import { useMeQuery } from '@/generated/graphql'
  * 
  */
 const ReddixApp = ({ Component, pageProps }) => {
+  // pause: isServer() is no longer need because we added cookie into headers in urql-client
   const [{ data, fetching }] = useMeQuery({
-    pause: typeof window === 'undefined' || typeof window === undefined
+    pause: isServer()
   })
   const router = useRouter()
-  
-  // emulate net delay for getting user data
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setState({ id: 'some-iuser-id', username: 'Some Username' })
-  //   }, 200)
-  // }, [])
 
   return (
     <UserContext.Provider
