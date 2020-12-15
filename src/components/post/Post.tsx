@@ -79,11 +79,11 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
   const [voteStatus, setVoteStatus] = React.useState<VoteState | null>(post.voteStatus)
   const router = useRouter()
   const toast = useToast()
-  const closeToastButtonRef = React.useRef<HTMLButtonElement>(null);
+  // const closeToastButtonRef = React.useRef<HTMLButtonElement>(null);
   
-  const { fetching, user }: any = useContext(UserContext) 
+  const { user }: any = useContext(UserContext) 
   const [{fetching: voteFetching}, vote] = useVoteMutation()
-
+  console.log('voteFetching', voteFetching)
 
   const handlePostClick = () => {
     console.log('handlePostClick')
@@ -136,11 +136,11 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
     } 
     
     try {
-      const {data, error } = await vote({ postId: post.id, val: temp })
+      const { data, error } = await vote({ postId: post.id, val: temp })
       if (data?.vote.success) {
         setVoteStatus(voteStatus+temp)
       } else {
-        
+        console.error(error)
       }
     } catch (err) {
       
