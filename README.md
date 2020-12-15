@@ -16,7 +16,8 @@ This project was aimed to learn state-of-the-art web technologies by recreating 
 
 1. How to get cookies server-side in a Next.js app
    - https://flaviocopes.com/nextjs-cookies
-2.
+2. Some good ideas can be found:
+   - https://github.com/leerob/daydrink
 
 ### Internet Resources:
 

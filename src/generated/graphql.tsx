@@ -503,19 +503,21 @@ export const RegularUserResponseFragmentDoc = gql`
     ...RegularUser
   }
 }
-    ${RegularErrorFragmentDoc}
-${RegularUserFragmentDoc}`;
+${RegularErrorFragmentDoc}
+${RegularUserFragmentDoc}`
+
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
     ...RegularUserResponse
   }
 }
-    ${RegularUserResponseFragmentDoc}`;
+${RegularUserResponseFragmentDoc}`
 
 export function useChangePasswordMutation() {
-  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
-};
+  return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument)
+}
+
 export const CreatePostDocument = gql`
     mutation CreatePost($input: PostInput!) {
   createPost(input: $input) {
@@ -537,11 +539,12 @@ export const CreatePostDocument = gql`
     }
   }
 }
-    `;
+`
 
 export function useCreatePostMutation() {
-  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument);
-};
+  return Urql.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument)
+}
+
 export const CreateSubreddixDocument = gql`
     mutation CreateSubreddix($name: String!) {
   createSubreddix(name: $name) {
@@ -557,29 +560,32 @@ export const CreateSubreddixDocument = gql`
     }
   }
 }
-    `;
+`
 
 export function useCreateSubreddixMutation() {
-  return Urql.useMutation<CreateSubreddixMutation, CreateSubreddixMutationVariables>(CreateSubreddixDocument);
-};
+  return Urql.useMutation<CreateSubreddixMutation, CreateSubreddixMutationVariables>(CreateSubreddixDocument)
+}
+
 export const DeletePostDocument = gql`
     mutation DeletePost($id: String!) {
   deletePost(id: $id)
 }
-    `;
+`
 
 export function useDeletePostMutation() {
-  return Urql.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument);
-};
+  return Urql.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument)
+}
+
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
 }
-    `;
+`
 
 export function useForgotPasswordMutation() {
-  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument);
-};
+  return Urql.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument)
+}
+
 export const LoginDocument = gql`
     mutation Login($usernameOrEmail: String!, $password: String!) {
   login(usernameOrEmail: $usernameOrEmail, password: $password) {
@@ -592,20 +598,22 @@ export const LoginDocument = gql`
     }
   }
 }
-    ${RegularUserFragmentDoc}`;
+${RegularUserFragmentDoc}`
 
 export function useLoginMutation() {
-  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
-};
+  return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument)
+}
+
 export const LogoutDocument = gql`
     mutation Logout {
   logout
 }
-    `;
+`
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
-};
+}
+
 export const RegisterDocument = gql`
     mutation Register($options: UserInput!) {
   register(args: $options) {
@@ -634,11 +642,12 @@ export const UpdatePostDocument = gql`
     createdAt
   }
 }
-    `;
+`
 
 export function useUpdatePostMutation() {
-  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument);
-};
+  return Urql.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument)
+}
+
 export const VoteDocument = gql`
     mutation VOTE($postId: String!, $val: Int!) {
   vote(postId: $postId, val: $val) {
@@ -649,11 +658,12 @@ export const VoteDocument = gql`
     success
   }
 }
-    `;
+`
 
 export function useVoteMutation() {
-  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
-};
+  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument)
+}
+
 export const CheckTokenDocument = gql`
     query CheckToken($token: String!) {
   checkToken(token: $token) {
@@ -664,22 +674,24 @@ export const CheckTokenDocument = gql`
     success
   }
 }
-    `;
+`
 
 export function useCheckTokenQuery(options: Omit<Urql.UseQueryArgs<CheckTokenQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<CheckTokenQuery>({ query: CheckTokenDocument, ...options });
-};
+  return Urql.useQuery<CheckTokenQuery>({ query: CheckTokenDocument, ...options })
+}
+
 export const MeDocument = gql`
     query Me {
   me {
     ...RegularUser
   }
 }
-    ${RegularUserFragmentDoc}`;
+${RegularUserFragmentDoc}`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
-};
+}
+
 export const PostDocument = gql`
     query Post($id: String!) {
   post(id: $id) {
@@ -701,11 +713,12 @@ export const PostDocument = gql`
     updatedAt
   }
 }
-    `;
+`
 
 export function usePostQuery(options: Omit<Urql.UseQueryArgs<PostQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<PostQuery>({ query: PostDocument, ...options });
-};
+}
+
 export const PostsDocument = gql`
     query Posts($limit: Int!, $cursor: String) {
   posts(limit: $limit, cursor: $cursor) {
@@ -719,8 +732,8 @@ export const PostsDocument = gql`
     }
   }
 }
-    ${PostFragmentFragmentDoc}`;
+${PostFragmentFragmentDoc}`
 
 export function usePostsQuery(options: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'> = {}) {
-  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options });
-};
+  return Urql.useQuery<PostsQuery>({ query: PostsDocument, ...options })
+}

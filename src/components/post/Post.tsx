@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
-import { Flex, Box, Heading, Avatar, Text, Button } from '@chakra-ui/core'
+import { Flex, Box, Heading, Avatar, Text, Button, useToast, CloseButton } from '@chakra-ui/core'
 import Downvote from '@/icons/arrow-down.svg'
 import Upvote from '@/icons/arrow-up.svg'
 import Dot from '@/icons/dot.svg'
+import Info from '@/icons/info.svg'
 import styled from '@emotion/styled'
 import PostFooter from './PostFooter'
 import { Post, useVoteMutation } from '@/generated/graphql'
@@ -76,20 +77,45 @@ enum VoteState {
 // post.voteStatus should be in three states: 1, 0, -1
 export const PostComponent = ({ post }: PostProps): JSX.Element => {
   const [voteStatus, setVoteStatus] = React.useState<VoteState | null>(post.voteStatus)
+  const [loadingStatus, setLoadingStatus] = React.useState<'upvoting' | 'downvoting' | 'stable'>('stable')
   const router = useRouter()
+  const toast = useToast()
+  // const closeToastButtonRef = React.useRef<HTMLButtonElement>(null);
   
-  const { fetching, user }: any = useContext(UserContext) 
-  const [{fetching: voteFetching}, vote] = useVoteMutation()
-
-
+  const { user }: any = React.useContext(UserContext) 
+  const [ , vote] = useVoteMutation()
+  
   const handlePostClick = () => {
     console.log('handlePostClick')
     router.push(`/post/${post.id}`)
   }
 
   const handleVote = async (action: string) => {
-    if (!user.me) return
-    
+    if (!user.me) {
+      // TODO: make separate hook or component for this custom toast
+      toast({
+        position: 'bottom',
+        duration: 3000,
+        isClosable: true,
+        render: ({ onClose }) => (
+          <Box borderRadius={5} bg="teal.100" p={2} display="inline-block">
+            <Flex flex="1" position="relative">
+              <Flex padding={2} alignItems="flex-start">
+                <Info width={18} height={18} style={{ fill: '#333' }}></Info>
+              </Flex>
+              <Flex flexDirection="column">
+                <Box letterSpacing="wide" fontWeight="bold">Login to vote!</Box>
+                <Box>You need to login in order to vote a post</Box>
+              </Flex>
+              <CloseButton position="absolute" right="-5px" top="-5px" onClick={() => onClose()} />
+            </Flex>
+          </Box>
+      ),
+      })
+      
+      return
+    }
+
     let temp = 0
     if (action === 'up') {
       if (voteStatus===1) {
@@ -99,6 +125,7 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
       } else {
         temp = 1
       }
+      setLoadingStatus('upvoting')
     } else {
       if (voteStatus===-1) {
         temp = 1
@@ -107,19 +134,23 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
       } else {
         temp = -1
       }
+      setLoadingStatus('downvoting')
     } 
     
     try {
+      
       const {data, error } = await vote({ postId: post.id, val: temp })
+      setLoadingStatus('stable')
       if (data?.vote.success) {
         setVoteStatus(voteStatus+temp)
+        console.log('vote({ postId: post.id, val: temp }) ', data, error)
       } else {
         
       }
-    } catch (err) {
       
+    } catch (err) {
+      console.error('vote error ', err)
     }
-
   }
 
   return (
@@ -134,6 +165,7 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
       >
         <Voter>
           <Button 
+            isLoading={loadingStatus==='upvoting'}
             onClick={() => handleVote('up')} 
             variant="solid" size="xs" padding={0}>
             <Upvote
@@ -145,6 +177,7 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
           <Box userSelect="none">{post.points}</Box>
 
           <Button 
+            isLoading={loadingStatus==='downvoting'}
             onClick={() => handleVote('down')} 
             variant="solid" size="xs" padding={0}>
             <Downvote
