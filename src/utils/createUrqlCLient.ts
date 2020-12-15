@@ -98,6 +98,11 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
               }
             },
 
+            deletePost: (result, args, cache, info) => {
+              console.log('deletePost ==== result, args, cache, info', result, args, cache, info)
+              cache.invalidate({ __typename: 'Post', id: args.id as string })
+            },
+
             /**
              * when we create new post we need to show it at the top of the feed
              * so invalidating first pagination results
@@ -121,8 +126,9 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 () => ({ me: null })
               )
             },
+
             /**
-             * 
+             * TODO: invalidate all posts if there is caching issue see createPost above 
              */
             login: (_result, args, cache, info) => {
               betterUpdateQuery<LoginMutation, MeQuery>(

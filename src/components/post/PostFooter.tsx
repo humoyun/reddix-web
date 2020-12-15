@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Flex } from '@chakra-ui/core'
 
 import GiveAward from '@/icons/give-award.svg'
@@ -6,9 +6,11 @@ import PostSave from '@/icons/post-save.svg'
 import PostUnsave from '@/icons/post-unsave.svg'
 import Share from '@/icons/arrow-share.svg'
 import Comments from '@/icons/comments.svg'
-import { Post } from '@/generated/graphql'
+import Remove from '@/icons/remove.svg'
+import { Post, useDeletePostMutation } from '@/generated/graphql'
 
 import styled from '@emotion/styled'
+import UserContext from '@/utils/userContext'
 // import { useRouter } from 'next/router'
 
 interface PostProps {
@@ -36,7 +38,10 @@ const PostButton = styled.div`
 
 const PostFooter = ({ data }: PostProps) => {
   const [isSaved, setIsSaved] = useState(Math.round(Math.random()))
-  
+  const { user }: any = useContext(UserContext)
+
+  const [{fetching: deleteFetching}, deletePost] = useDeletePostMutation()
+
   const command = (_: React.SyntheticEvent, cmd: string) => {
     console.log('command', cmd)
     
@@ -44,11 +49,17 @@ const PostFooter = ({ data }: PostProps) => {
       setIsSaved((old) => (old + 1)%2)
     } else if (cmd === 'share') { 
       console.log()
+    } else if (cmd === 'delete') {
+      removePost(data.id)
     }
   }
 
+  const removePost = async (id: string) => {
+    const r = await deletePost({ id })
+  }
+
   return (
-    <Flex direction="row" align="center" mt={2} className="post-footer">
+    <Flex direction="row" align="center" mt={2} padding='5px 0' className="post-footer">
       <PostButton onClick={(e) => command(e, 'give-award')}>
         <GiveAward
           style={{ fill: '#455A64' }}
@@ -90,6 +101,18 @@ const PostFooter = ({ data }: PostProps) => {
         }
         {isSaved ? <span>Unsave</span>: <span>Save</span>}
       </PostButton>
+      
+      {user && user?.me?.id === data?.owner.id && 
+      (
+        <PostButton onClick={(e) => command(e, 'delete')}>
+          <Remove
+            style={{ fill: '#455A64' }}
+            width={16}
+            height={16}
+            />  
+          <span>Delete</span>
+        </PostButton>
+      )}
 
     </Flex>
   )

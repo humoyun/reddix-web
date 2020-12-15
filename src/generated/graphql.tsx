@@ -303,6 +303,16 @@ export type CreateSubreddixMutation = (
   ) }
 );
 
+export type DeletePostMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type DeletePostMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'deletePost'>
+);
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -552,6 +562,15 @@ export const CreateSubreddixDocument = gql`
 export function useCreateSubreddixMutation() {
   return Urql.useMutation<CreateSubreddixMutation, CreateSubreddixMutationVariables>(CreateSubreddixDocument);
 };
+export const DeletePostDocument = gql`
+    mutation DeletePost($id: String!) {
+  deletePost(id: $id)
+}
+    `;
+
+export function useDeletePostMutation() {
+  return Urql.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument);
+};
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
   forgotPassword(email: $email)
@@ -630,12 +649,11 @@ export const VoteDocument = gql`
     success
   }
 }
-`
+    `;
 
 export function useVoteMutation() {
-  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument)
-}
-
+  return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
+};
 export const CheckTokenDocument = gql`
     query CheckToken($token: String!) {
   checkToken(token: $token) {
@@ -646,12 +664,11 @@ export const CheckTokenDocument = gql`
     success
   }
 }
-`
+    `;
 
 export function useCheckTokenQuery(options: Omit<Urql.UseQueryArgs<CheckTokenQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CheckTokenQuery>({ query: CheckTokenDocument, ...options });
-}
-
+};
 export const MeDocument = gql`
     query Me {
   me {

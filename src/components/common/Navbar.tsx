@@ -75,8 +75,9 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
         <Button
           size="xs"
           isLoading={logoutFetching}
-          onClick={() => { 
-            logout()
+          onClick={async () => { 
+            await logout()
+            // TODO: router.reload() why we need this find out
           }}>
           logout
         </Button>
