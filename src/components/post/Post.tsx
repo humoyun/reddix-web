@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
-import { Flex, Box, Heading, Avatar, Text, Button, useToast, AlertIcon, Alert, AlertTitle, AlertDescription, CloseButton } from '@chakra-ui/core'
+import { Flex, Box, Heading, Avatar, Text, Button, useToast, CloseButton } from '@chakra-ui/core'
 import Downvote from '@/icons/arrow-down.svg'
 import Upvote from '@/icons/arrow-up.svg'
 import Dot from '@/icons/dot.svg'
@@ -98,8 +98,8 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
         duration: 3000,
         isClosable: true,
         render: ({ onClose }) => (
-          <Box borderRadius={5} bg="teal.100" p={2} display="inline-block">
-            <Flex flex="1" position="relative">
+          <Box borderRadius={4} bg="#eee" p={2} display="inline-block" borderLeft='4px solid dodgerBlue'>
+            <Flex flex="1" position="relative" >
               <Flex padding={2} alignItems="flex-start">
                 <Info width={18} heigt={18} style={{ fill: '#333' }}></Info>
               </Flex>

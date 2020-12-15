@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { 
   Box, 
   Flex, 
@@ -8,7 +8,7 @@ import {
   Tooltip, 
   AvatarBadge, 
   Avatar, 
-  Link
+  // Link
 } from '@chakra-ui/core'
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
@@ -40,9 +40,9 @@ export interface NavBarProps {
 } 
 
 
-const SecurePart: React.FC<any> = (props: any) => {
+const SecurePart: React.FC<any> = (_: any) => {
   const [mounted, setMounted] = React.useState(false)
-  const {user, fetching}: any = useContext(UserContext)
+  const {user, fetching}: any = React.useContext(UserContext)
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
 
   React.useEffect(() => {
