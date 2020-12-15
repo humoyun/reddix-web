@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { 
   Box, 
   Flex, 
@@ -39,23 +39,21 @@ export interface NavBarProps {
   dummy?: string
 } 
 
-export const Navbar: React.FC<NavBarProps> = ({ }) => {
+
+const SecurePart: React.FC<any> = (props: any) => {
+  const [mounted, setMounted] = React.useState(false)
   const {user, fetching}: any = useContext(UserContext)
-
-  const router = useRouter()
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
-  let securePart = null
 
-  console.log(' user :; :: ', user)
-  console.log(' fetching :; :: ', fetching)
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  const goHome = () => {
-    router.push('/')
-  }
+  if (!mounted) return null;
 
-  if (!user?.me) {
-    securePart = (
-      <Flex alignItems="center" minW={100}>
+  if (!user?.me) { 
+    return (
+      <Flex>
         <NextLink href="/auth/login">
           <Button
             isLoading={fetching}
@@ -63,26 +61,34 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
             login
           </Button>
         </NextLink>
-      </Flex>
+      </Flex>         
     )
-  } else { 
-    securePart = (
-      <Flex alignItems="center">
-        <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
-          <AvatarBadge  boxSize="1.25em" bg="green.500" />
-        </Avatar>
-        <Box mr={5} px={2}>{user.me.username}</Box>
-        <Button
-          size="xs"
-          isLoading={logoutFetching}
-          onClick={() => { 
-            logout()
-          }}>
-          logout
-        </Button>
-      </Flex>
-    )
-  } 
+  }
+
+  return (
+    <Flex alignItems="center" minW={100}>
+      <Avatar size="sm" name="Humoyun Ahmad" src="https://bit.ly/ryan-florence">
+        <AvatarBadge  boxSize="1.25em" bg="green.500" />
+      </Avatar>
+      <Box mr={5} px={2}>{user.me.username}</Box>
+      <Button
+        size="xs"
+        isLoading={logoutFetching}
+        onClick={() => { 
+          logout()
+        }}>
+        logout
+      </Button>
+    </Flex>
+  )
+}  
+
+export const Navbar: React.FC<NavBarProps> = ({ }) => {
+  const router = useRouter()
+
+  const goHome = () => {
+    router.push('/')
+  }
 
   return (
     <Flex
@@ -151,9 +157,9 @@ export const Navbar: React.FC<NavBarProps> = ({ }) => {
       </Flex>
       {/* TODO: take a look at: https://www.joshwcomeau.com/react/the-perils-of-rehydration */}
 
-      {/* <Flex justifyContent="flex-end" flex={1} mr={5}>
-        { securePart }
-      </Flex> */}
+      <Flex justifyContent="flex-end" flex={1} mr={5}>
+        <SecurePart></SecurePart>
+      </Flex>
     </Flex>
   )
 }
