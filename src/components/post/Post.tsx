@@ -25,7 +25,7 @@ const Flexbox = styled.div`
   flex-direction: row;
   min-height: 100px;
   margin: 15px 0;
-  border: 1px solid #fff;
+  border: 1px solid transparent;
   box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.1);
   border-radius: 3px;
   cursor: pointer;
