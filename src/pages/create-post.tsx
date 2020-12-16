@@ -1,13 +1,21 @@
 import React from 'react'
-import { Box, Flex, Stack, Button, Text, Badge, Menu, MenuButton, MenuItem, MenuList, Image } from '@chakra-ui/core'
+import {
+  Box,
+  Flex,
+  // Button,
+  Text,
+  Badge,
+  // Menu,
+  // Image
+} from '@chakra-ui/core'
 import { withUrqlClient } from 'next-urql'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import Select from 'react-select'
-import { Form, Formik } from 'formik'
+// import { Form, Formik } from 'formik'
 
-import { PostType, useCreatePostMutation } from '../generated/graphql'
+import { /*PostType,*/ useCreatePostMutation } from '../generated/graphql'
 import { createUrqlClient } from '../utils/createUrqlClient'
-import { InputField } from '../components/common/InputField'
+// import { InputField } from '../components/common/InputField'
 import { useIsAuth } from '../utils/useIsAuth'
 import PostTabs from '../components/create-post/PostTabs'
 
@@ -92,8 +100,8 @@ const Option = ({ innerRef, innerProps, data }) => {
 
 
 const CreatePost: React.FC<any> = ({ }) => {
-  const router = useRouter()
-  const [, createPost] = useCreatePostMutation()
+  // const router = useRouter()
+  // const [, createPost] = useCreatePostMutation()
   
   useIsAuth()
 
