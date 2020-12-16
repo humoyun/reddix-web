@@ -99,8 +99,8 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
         duration: 3000,
         isClosable: true,
         render: ({ onClose }) => (
-          <Box borderRadius={5} bg="teal.100" p={2} display="inline-block">
-            <Flex flex="1" position="relative">
+          <Box borderRadius={4} bg="#eee" p={2} display="inline-block" borderLeft='4px solid dodgerBlue'>
+            <Flex flex="1" position="relative" >
               <Flex padding={2} alignItems="flex-start">
                 <Info width={18} height={18} style={{ fill: '#333' }}></Info>
               </Flex>
@@ -139,14 +139,14 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
     } 
     
     try {
-      
       const {data, error } = await vote({ postId: post.id, val: temp })
       setLoadingStatus('stable')
+
       if (data?.vote.success) {
         setVoteStatus(voteStatus+temp)
         console.log('vote({ postId: post.id, val: temp }) ', data, error)
       } else {
-        
+        console.error(error)
       }
       
     } catch (err) {
@@ -188,7 +188,7 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
           </Button>
 
         </Voter>
-        
+
         <Flex flexDirection="column" justifyContent='center' alignItems='center'>
           <PostSave
             style={{ fill: '#455A64' }}

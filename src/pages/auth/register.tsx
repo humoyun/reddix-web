@@ -8,7 +8,6 @@ import {
   Link,
   Text
 } from '@chakra-ui/core'
-import { BodyWrapper } from '@/components/common/BodyWrapper'
 import { InputField } from '@/components/common/InputField'
 import { useRouter } from 'next/router'
 import { useRegisterMutation } from '@/generated/graphql'
