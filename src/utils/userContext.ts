@@ -1,8 +1,8 @@
 import { createContext } from 'react'
 
 const initUserData = {
-  id: null,
-  username: ''
+  fetching: false,
+  user: null
 }
 
 const UserContext = createContext(initUserData)

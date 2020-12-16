@@ -5,6 +5,7 @@ import Downvote from '@/icons/arrow-down.svg'
 import Upvote from '@/icons/arrow-up.svg'
 import Dot from '@/icons/dot.svg'
 import Info from '@/icons/info.svg'
+import PostSave from '@/icons/post-save.svg'
 import styled from '@emotion/styled'
 import PostFooter from './PostFooter'
 import { Post, useVoteMutation } from '@/generated/graphql'
@@ -38,7 +39,7 @@ const Flexbox = styled.div`
 
 const Voter = styled.div`
   display: flex;
-  height: 100%;
+  height: 75%;
   align-items: center;
   flex-direction: column;
 `
@@ -186,8 +187,16 @@ export const PostComponent = ({ post }: PostProps): JSX.Element => {
               height={18} />
           </Button>
 
-
         </Voter>
+        
+        <Flex flexDirection="column" justifyContent='center' alignItems='center'>
+          <PostSave
+            style={{ fill: '#455A64' }}
+            width={16}
+            height={16} />   
+          <Text>{Math.round(Math.random()*30)}</Text>       
+        </Flex>
+
       </Box>
 
       <Flex

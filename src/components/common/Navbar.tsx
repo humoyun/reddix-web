@@ -42,7 +42,7 @@ export interface NavBarProps {
 
 const SecurePart: React.FC<any> = (props: any) => {
   const [mounted, setMounted] = React.useState(false)
-  const {user, fetching}: any = useContext(UserContext)
+  const {user, fetching}: {fetching: boolean, user: any} = useContext(UserContext)
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation()
 
   const router = useRouter()
@@ -51,7 +51,7 @@ const SecurePart: React.FC<any> = (props: any) => {
     setMounted(true)
   }, [])
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
   if (!user?.me) { 
     return (
